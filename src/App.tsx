@@ -1,14 +1,22 @@
+import { Provider } from "react-redux";
 import { ConfigProviders } from "./components/ConfigProviders";
-import { Routes } from "./routes";
-import { MainLayoutProvider } from "./template/mainLayout/context";
+// import LoginPage from "./pages/public/LoginPage";
+import LoginLayout from "./template/loginLayout";
+import appStore from "./store/store";
+// import { Routes } from "./routes";
+// import { MainLayoutProvider } from "./template/mainLayout/context";
 
 function App() {
   return (
-    <ConfigProviders>
-      <MainLayoutProvider>
+    <Provider store={appStore}>
+      <ConfigProviders>
+        <LoginLayout />
+        {/* <LoginPage /> */}
+        {/* <MainLayoutProvider>
         <Routes />
-      </MainLayoutProvider>
-    </ConfigProviders>
+      </MainLayoutProvider> */}
+      </ConfigProviders>
+    </Provider>
   );
 }
 

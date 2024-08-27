@@ -6,12 +6,14 @@ import {
 } from "react-router-dom";
 import { privateRoutes } from "./privateRoutes";
 import { Flex } from "antd";
+import { publicRoutes } from "./publicRoutes";
 
 export const Routes: FC = () => {
   const [currentRoute, setCurrentRoute] = useState<RouteObject[]>([]);
 
   useEffect(() => {
-    setCurrentRoute(privateRoutes);
+    const userToken = localStorage.getItem("userToken");
+    setCurrentRoute(userToken ? privateRoutes : publicRoutes);
   }, []);
 
   if (!currentRoute.length) {
