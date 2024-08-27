@@ -1,11 +1,11 @@
-import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
-import SocialNetworks from "./SocialNetworks";
+import { App, Button, Checkbox, Flex, Form, Input, Typography } from "antd";
+// import SocialNetworks from "./SocialNetworks";
 import { LoginOutlined } from "@ant-design/icons";
 import Link from "antd/es/typography/Link";
 import { ILoginFields } from "./loginTypes";
 import { useAppSelector } from "../../../hooks/hook";
-import { selectUsername, setUser } from "../../../feachers/auth/authSlice";
-import { patcher } from "../../../store/store";
+import { selectUsername } from "../../../feachers/auth/authSlice";
+// import { patcher } from "../../../store/store";
 import { useLoginUserMutation } from "../../../services/authAPi/authApi";
 
 const { Title } = Typography;
@@ -13,8 +13,8 @@ const { Title } = Typography;
 const Login = () => {
   const [trigger, { data }] = useLoginUserMutation();
   console.log("data", data);
-
-  patcher(setUser("jack"));
+  const { message } = App.useApp();
+  // patcher(setUser("jack"));
   const user = useAppSelector(selectUsername);
   console.log("zozo", user);
   const [form] = Form.useForm();
@@ -25,8 +25,15 @@ const Login = () => {
     //   password: values.password,
     //   remember: values.remember ? true : false,
     // };
-    await trigger({ email: values.email, password: values.password });
+    await trigger({ email: values.email, password: values.password }).then(
+      ({ data }) => {
+        if (data) {
+          message.success("Login successful");
+        }
+      }
+    );
   };
+
   return (
     <>
       <Form

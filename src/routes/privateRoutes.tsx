@@ -1,7 +1,7 @@
 import { RouteObject } from "react-router-dom";
 import { ROUTES } from "./routesUrls";
 
-import { MainLayout } from "../template/mainLayout/components/mainLayout";
+import { MainLayout } from "../template/mainLayout";
 import CustomersPage from "../pages/private/CustomersPage";
 
 export const privateRoutes: RouteObject[] = [

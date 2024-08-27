@@ -5,7 +5,6 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
@@ -16,16 +15,14 @@ interface IContext {
   dispatch: {
     setCollapsed: Dispatch<SetStateAction<boolean>>;
   };
-  func: {};
 }
 
 /***************************   create context and set initial values      ******************** */
-export const mainLayoutContext = createContext<IContext>({
+export const MainLayoutContext = createContext<IContext>({
   values: {
     collapsed: false,
   },
   dispatch: { setCollapsed: () => {} },
-  func: {},
 });
 /**************************************************************************************** */
 export const MainLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -38,16 +35,14 @@ export const MainLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
     dispatch: {
       setCollapsed: setCollapsed,
     },
-    func: {},
   };
 
   return (
-    <mainLayoutContext.Provider value={sharedValues}>
+    <MainLayoutContext.Provider value={sharedValues}>
       {children}
-    </mainLayoutContext.Provider>
+    </MainLayoutContext.Provider>
   );
 };
 /**************************************************************************************** */
-export const useMainLayoutContext = () => {
-  return useContext(mainLayoutContext);
-};
+// eslint-disable-next-line react-refresh/only-export-components
+export const useMainLayoutContext = () => useContext(MainLayoutContext);

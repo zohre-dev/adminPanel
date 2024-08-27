@@ -1,11 +1,11 @@
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 import { ROUTES } from "./routesUrls";
 import LoginLayout from "../template/loginLayout";
 import LoginPage from "../pages/public/LoginPage";
 
 export const publicRoutes: RouteObject[] = [
   {
-    path: ROUTES.home,
+    path: ROUTES.login,
     element: <LoginLayout />,
     children: [
       {
@@ -13,5 +13,9 @@ export const publicRoutes: RouteObject[] = [
         element: <LoginPage />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to={ROUTES.login} />,
   },
 ];
