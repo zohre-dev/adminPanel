@@ -1,6 +1,10 @@
 import { FC, ReactNode } from "react";
 import { useOverride } from "./override";
+<<<<<<< HEAD
 import { App, ConfigProvider, ThemeConfig } from "antd";
+=======
+import { ConfigProvider, ThemeConfig, App } from "antd";
+>>>>>>> 2dbf5ca4e740edc69e165c2350cf05616ccf9754
 
 interface Iprops {
   children: ReactNode;

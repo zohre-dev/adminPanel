@@ -20,12 +20,16 @@ interface IContext {
 }
 
 /***************************   create context and set initial values      ******************** */
-export const mainLayoutContext = createContext<IContext>({
+export const MainLayoutContext = createContext<IContext>({
   values: {
     collapsed: false,
     openDrawer: false,
   },
+<<<<<<< HEAD
   dispatch: { setCollapsed: () => {}, setOpenDrawer: () => {} },
+=======
+  dispatch: { setCollapsed: () => {} },
+>>>>>>> 2dbf5ca4e740edc69e165c2350cf05616ccf9754
 });
 /**************************************************************************************** */
 export const MainLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -44,10 +48,15 @@ export const MainLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <mainLayoutContext.Provider value={sharedValues}>
+    <MainLayoutContext.Provider value={sharedValues}>
       {children}
-    </mainLayoutContext.Provider>
+    </MainLayoutContext.Provider>
   );
 };
 /**************************************************************************************** */
+<<<<<<< HEAD
 export const useMainLayoutContext = () => useContext(mainLayoutContext);
+=======
+// eslint-disable-next-line react-refresh/only-export-components
+export const useMainLayoutContext = () => useContext(MainLayoutContext);
+>>>>>>> 2dbf5ca4e740edc69e165c2350cf05616ccf9754

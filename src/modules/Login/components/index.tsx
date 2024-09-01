@@ -1,9 +1,18 @@
 import { App, Button, Checkbox, Flex, Form, Input, Typography } from "antd";
+<<<<<<< HEAD
+=======
+// import SocialNetworks from "./SocialNetworks";
+>>>>>>> 2dbf5ca4e740edc69e165c2350cf05616ccf9754
 import { LoginOutlined } from "@ant-design/icons";
 import Link from "antd/es/typography/Link";
 import { ILoginFields } from "./loginTypes";
 import { useAppSelector } from "../../../hooks/hook";
+<<<<<<< HEAD
 import { selectUsername, setUser } from "../../../feachers/auth/authSlice";
+=======
+import { selectUsername } from "../../../feachers/auth/authSlice";
+// import { patcher } from "../../../store/store";
+>>>>>>> 2dbf5ca4e740edc69e165c2350cf05616ccf9754
 import { useLoginUserMutation } from "../../../services/authAPi/authApi";
 import { useNavigate } from "react-router-dom";
 import { patcher } from "../../../store/store";
@@ -13,11 +22,19 @@ const { Title } = Typography;
 
 const Login = () => {
   const [trigger, { data }] = useLoginUserMutation();
+<<<<<<< HEAD
   const { message } = App.useApp();
   const navigate = useNavigate();
   // patcher(setUser("jack"));
   // const user = useAppSelector(selectUsername);
 
+=======
+  console.log("data", data);
+  const { message } = App.useApp();
+  // patcher(setUser("jack"));
+  const user = useAppSelector(selectUsername);
+  console.log("zozo", user);
+>>>>>>> 2dbf5ca4e740edc69e165c2350cf05616ccf9754
   const [form] = Form.useForm();
 
   const onFinish = async (values: ILoginFields) => {
@@ -27,6 +44,7 @@ const Login = () => {
     //   remember: values.remember ? true : false,
     // };
     await trigger({ email: values.email, password: values.password }).then(
+<<<<<<< HEAD
       (result) => {
         message.success("login successful");
         patcher(
@@ -36,9 +54,16 @@ const Login = () => {
           })
         );
         navigate(ROUTES.home);
+=======
+      ({ data }) => {
+        if (data) {
+          message.success("Login successful");
+        }
+>>>>>>> 2dbf5ca4e740edc69e165c2350cf05616ccf9754
       }
     );
   };
+
   return (
     <>
       <Form
