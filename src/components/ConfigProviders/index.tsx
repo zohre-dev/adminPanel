@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import { useOverride } from "./override";
-import { ConfigProvider, ThemeConfig } from "antd";
+import { App, ConfigProvider, ThemeConfig } from "antd";
 
 interface Iprops {
   children: ReactNode;
@@ -28,5 +28,9 @@ export const ConfigProviders: FC<Iprops> = ({ children }) => {
     components: lightThemeComponents,
   };
 
-  return <ConfigProvider theme={antdTheme}>{children}</ConfigProvider>;
+  return (
+    <ConfigProvider theme={antdTheme}>
+      <App>{children}</App>
+    </ConfigProvider>
+  );
 };

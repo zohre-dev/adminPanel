@@ -1,18 +1,23 @@
 import { Badge, Button, Dropdown, Flex, Image, Space } from "antd";
 
 import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
   BellOutlined,
   DownOutlined,
   MailOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
+
+import { useAppSelector } from "../../../../hooks/hook";
+import { selectUsername } from "../../../../feachers/auth/authSlice";
+import { useMediaQuery } from "../../../../hooks/mediaQuery";
+import { BreakPoints } from "../../../../constants/breakPointsNumber";
 import { useMainLayoutContext } from "../../context";
 
 const AppHeader: React.FC = () => {
-  const { values, dispatch } = useMainLayoutContext();
-  const { collapsed } = values;
-  const { setCollapsed } = dispatch;
+  const userName = useAppSelector(selectUsername);
+  const isLabtop = useMediaQuery(BreakPoints.labtop); //greater than 991 is laptob size
+  const { dispatch } = useMainLayoutContext();
+  const { setOpenDrawer } = dispatch;
 
   const items = [
     {
@@ -60,21 +65,19 @@ const AppHeader: React.FC = () => {
     },
   ];
 
-  const handleClick = () => {
-    console.log("!collapsed", !collapsed);
-    setCollapsed(!collapsed);
-  };
   return (
     <Flex
-      justify="space-between"
       align="center"
-      className="bg-red-400 px-8 py-3"
+      justify={!isLabtop ? "space-between" : "end"}
+      className="bg-red-400 px-8 py-3 w-full"
     >
-      <Button
-        className="headerButtons"
-        icon={collapsed ? <ArrowRightOutlined /> : <ArrowLeftOutlined />}
-        onClick={handleClick}
-      />
+      {!isLabtop && (
+        <MenuOutlined
+          className="cursor-pointer"
+          onClick={() => setOpenDrawer(true)}
+        />
+      )}
+
       <Flex align="center" gap="small">
         <Button
           className="headerButtons"
@@ -101,7 +104,7 @@ const AppHeader: React.FC = () => {
             }}
           >
             <Space>
-              Zohre Mehrabi
+              {userName}
               <DownOutlined height={24} width={24} />
             </Space>
           </Dropdown>

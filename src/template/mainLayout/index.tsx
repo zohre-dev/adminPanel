@@ -1,0 +1,24 @@
+import { Layout } from "antd";
+
+import { Content } from "antd/es/layout/layout";
+import { Outlet } from "react-router-dom";
+import { FC } from "react";
+import { MainLayoutProvider } from "./context";
+import AppSider from "./components/AppSider";
+import AppHeader from "./components/AppHeader";
+
+export const MainLayout: FC = () => {
+  return (
+    <MainLayoutProvider>
+      <Layout className="min-h-screen">
+        <AppSider />
+        <Layout>
+          <AppHeader />
+          <Content className="px-8 py-4">
+            <Outlet />
+          </Content>
+        </Layout>
+      </Layout>
+    </MainLayoutProvider>
+  );
+};

@@ -1,6 +1,5 @@
 import { Flex, Space } from "antd";
 import Title from "antd/es/typography/Title";
-import Login from "../../modules/Login/components";
 import { Outlet } from "react-router-dom";
 
 const LoginLayout = () => {
@@ -13,7 +12,6 @@ const LoginLayout = () => {
           </Title>
         </Space>
         <div className="bg-white flex-1 p-[50px]">
-          {/* <Login /> */}
           <Outlet />
         </div>
       </Flex>

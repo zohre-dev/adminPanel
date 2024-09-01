@@ -5,40 +5,42 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
 interface IContext {
   values: {
     collapsed: boolean;
+    openDrawer: boolean;
   };
   dispatch: {
     setCollapsed: Dispatch<SetStateAction<boolean>>;
+    setOpenDrawer: Dispatch<SetStateAction<boolean>>;
   };
-  func: {};
 }
 
 /***************************   create context and set initial values      ******************** */
 export const mainLayoutContext = createContext<IContext>({
   values: {
     collapsed: false,
+    openDrawer: false,
   },
-  dispatch: { setCollapsed: () => {} },
-  func: {},
+  dispatch: { setCollapsed: () => {}, setOpenDrawer: () => {} },
 });
 /**************************************************************************************** */
 export const MainLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
   const sharedValues: IContext = {
     values: {
       collapsed: collapsed,
+      openDrawer: openDrawer,
     },
     dispatch: {
       setCollapsed: setCollapsed,
+      setOpenDrawer: setOpenDrawer,
     },
-    func: {},
   };
 
   return (
@@ -48,6 +50,4 @@ export const MainLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 /**************************************************************************************** */
-export const useMainLayoutContext = () => {
-  return useContext(mainLayoutContext);
-};
+export const useMainLayoutContext = () => useContext(mainLayoutContext);

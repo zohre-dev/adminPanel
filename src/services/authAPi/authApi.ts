@@ -7,7 +7,6 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     loginUser: builder.mutation<ILoginResponse, ILoginPayload>({
       query: (body) => {
-        console.log("body", body);
         return {
           url: "users/login",
           method: "POST",
@@ -15,7 +14,6 @@ export const authApi = createApi({
         };
       },
       transformResponse(res: ILoginResponse) {
-        console.log("res", res);
         return res;
       },
     }),

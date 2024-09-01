@@ -1,3 +1,4 @@
 export interface IInitialState {
-  userName: string;
+  name: string | undefined;
+  token: string | undefined;
 }

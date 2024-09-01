@@ -1,7 +1,8 @@
 import { IInitialState } from "./authSliceType";
 
 export const initialState: IInitialState = {
-  userName: "",
+  userName: undefined,
+  token: undefined,
 };
 
 export default initialState;

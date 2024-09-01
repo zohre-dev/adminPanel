@@ -1,10 +1,10 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
-import { items } from "./dropDownItems";
+import { dropDownItems } from "./items";
 
 const AppDropDown = () => {
   return (
-    <Dropdown menu={{ items }}>
+    <Dropdown menu={dropDownItems}>
       <Space>
         Zohre Mehrabi
         <DownOutlined height={24} width={24} />

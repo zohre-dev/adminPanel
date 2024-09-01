@@ -1,22 +1,23 @@
-import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
-import SocialNetworks from "./SocialNetworks";
+import { App, Button, Checkbox, Flex, Form, Input, Typography } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
 import Link from "antd/es/typography/Link";
 import { ILoginFields } from "./loginTypes";
 import { useAppSelector } from "../../../hooks/hook";
 import { selectUsername, setUser } from "../../../feachers/auth/authSlice";
-import { patcher } from "../../../store/store";
 import { useLoginUserMutation } from "../../../services/authAPi/authApi";
+import { useNavigate } from "react-router-dom";
+import { patcher } from "../../../store/store";
+import { ROUTES } from "../../../routes/routesUrls";
 
 const { Title } = Typography;
 
 const Login = () => {
   const [trigger, { data }] = useLoginUserMutation();
-  console.log("data", data);
+  const { message } = App.useApp();
+  const navigate = useNavigate();
+  // patcher(setUser("jack"));
+  // const user = useAppSelector(selectUsername);
 
-  patcher(setUser("jack"));
-  const user = useAppSelector(selectUsername);
-  console.log("zozo", user);
   const [form] = Form.useForm();
 
   const onFinish = async (values: ILoginFields) => {
@@ -25,7 +26,18 @@ const Login = () => {
     //   password: values.password,
     //   remember: values.remember ? true : false,
     // };
-    await trigger({ email: values.email, password: values.password });
+    await trigger({ email: values.email, password: values.password }).then(
+      (result) => {
+        message.success("login successful");
+        patcher(
+          setUser({
+            name: result.data?.user.name,
+            token: result.data?.token,
+          })
+        );
+        navigate(ROUTES.home);
+      }
+    );
   };
   return (
     <>

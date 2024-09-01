@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import {
   createBrowserRouter,
   RouteObject,
@@ -7,16 +7,31 @@ import {
 import { privateRoutes } from "./privateRoutes";
 import { Flex } from "antd";
 import { publicRoutes } from "./publicRoutes";
+import { useAppSelector } from "../hooks/hook";
+import { USER_INFO } from "../constants/localStorageKeys";
+import { patcher } from "../store/store";
+import { setUser } from "../feachers/auth/authSlice";
 
 export const Routes: FC = () => {
-  const [currentRoute, setCurrentRoute] = useState<RouteObject[]>([]);
+  const [currentRoute, setCurrentRoute] = useState<RouteObject[]>();
+  const userToken = useAppSelector((store) => store.auth.token);
 
   useEffect(() => {
-    const userToken = localStorage.getItem("userToken");
     setCurrentRoute(userToken ? privateRoutes : publicRoutes);
-  }, []);
+  }, [userToken]);
 
-  if (!currentRoute.length) {
+  // useEffect(() => {
+  //   const { userToken, userName } = JSON.parse(
+  //     localStorage.getItem(USER_INFO) || "{}"
+  //   );
+  //   if (userToken && userName)
+  //     patcher(setUser({ name: userName, token: userToken }));
+  // }, []);
+  const routes = useMemo(() => {
+    return currentRoute && createBrowserRouter(currentRoute);
+  }, [currentRoute]);
+
+  if (!routes) {
     return (
       <Flex
         justify="center"
@@ -30,7 +45,6 @@ export const Routes: FC = () => {
       </Flex>
     );
   }
-  const routes = createBrowserRouter(currentRoute);
 
   return <RouterProvider router={routes} />;
 };

@@ -1,7 +1,7 @@
-import { menuItems } from "./menuItems";
+import { menuItems } from "./items";
 import { Menu } from "antd";
 
-const AppMenu = () => {
+const SiderMenu = () => {
   return (
     <Menu
       items={menuItems}
@@ -12,4 +12,4 @@ const AppMenu = () => {
   );
 };
 
-export default AppMenu;
+export default SiderMenu;

@@ -1,14 +1,18 @@
-export const items = [
+import { Anchor } from "antd";
+
+const items = [
   {
     key: "1",
     label: (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.antgroup.com"
-      >
-        1st menu item
-      </a>
+      <Anchor
+        items={[
+          {
+            key: "1",
+            href: "https://www.antgroup.com",
+            title: "Basic demo",
+          },
+        ]}
+      />
     ),
   },
   {
@@ -43,3 +47,7 @@ export const items = [
     label: "a danger item",
   },
 ];
+
+export const dropDownItems = {
+  items,
+};
