@@ -7,7 +7,7 @@ import {
   UsergroupDeleteOutlined,
 } from "@ant-design/icons";
 
-export const menuItems = [
+export const menuItemsTop = [
   {
     key: "1",
     icon: <HomeOutlined />,
@@ -19,7 +19,10 @@ export const menuItems = [
     label: "CUSTOMERS",
   },
   { key: "3", icon: <PieChartOutlined />, label: "ANALYTICS" },
-  { key: "4", icon: <MailOutlined />, label: "MESSAGE" },
-  { key: "5", icon: <SettingOutlined />, label: "SETTING" },
-  { key: "6", icon: <QuestionCircleOutlined />, label: "HELP CENTER" },
+];
+//*************************************************/
+export const menuItemsBottom = [
+  { key: "1", icon: <MailOutlined />, label: "MESSAGE" },
+  { key: "2", icon: <SettingOutlined />, label: "SETTING" },
+  { key: "3", icon: <QuestionCircleOutlined />, label: "HELP CENTER" },
 ];

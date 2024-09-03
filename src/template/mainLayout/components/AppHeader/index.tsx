@@ -80,14 +80,14 @@ const AppHeader: React.FC = () => {
 
       <Flex align="center" gap="small">
         <Button
-          className="headerButtons"
+          className="headerButton"
           icon={
             <Badge dot={true}>
               <BellOutlined />
             </Badge>
           }
         />
-        <Button className="headerButtons" icon={<MailOutlined />} />
+        <Button className="headerButton" icon={<MailOutlined />} />
         <Flex
           className="border rounded-md bg-white h-10 px-2"
           gap="small"

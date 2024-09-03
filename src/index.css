@@ -9,7 +9,29 @@ body {
   height: 100vh;
 }
 @layer components {
-  .headerButtons {
+  .headerButton,
+  .tableActionButton {
     @apply h-10 w-10 !important;
+  }
+
+  .ant-table-container {
+    @apply border-none !important;
+  }
+
+  .ant-table-content thead.ant-table-thead tr th.ant-table-cell:last-child {
+    @apply border-r-0 !important;
+  }
+
+  .ant-table-content
+    tbody.ant-table-tbody
+    tr.ant-table-row
+    td.ant-table-cell:last-child {
+    @apply border-r-0 !important;
+  }
+  .ant-table-content
+    tbody.ant-table-tbody
+    tr.ant-table-row:last-child
+    td.ant-table-cell {
+    @apply border-b-0 !important;
   }
 }
