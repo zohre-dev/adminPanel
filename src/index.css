@@ -34,4 +34,18 @@ body {
     td.ant-table-cell {
     @apply border-b-0 !important;
   }
+
+  /* aside.ant-layout-sider {
+    width: 240px !important;
+  }
+
+  .ant-layout {
+    width: 1200px !important;
+  }
+  aside .ant-layout-sider-children ul.ant-menu {
+    padding: 16px 32px !important;
+  }
+  .ant-layout-sider .ant-menu .ant-menu-item {
+    padding: 12px !important;
+  } */
 }

@@ -29,6 +29,7 @@ const Login = () => {
     //   password: values.password,
     //   remember: values.remember ? true : false,
     // };
+
     await trigger({ email: values.email, password: values.password }).then(
       (result) => {
         if (result.data) {

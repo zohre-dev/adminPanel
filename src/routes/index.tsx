@@ -16,6 +16,7 @@ export const Routes: FC = () => {
 
   useEffect(() => {
     setCurrentRoute(userToken ? privateRoutes : publicRoutes);
+    // setCurrentRoute(privateRoutes);
   }, [userToken]);
 
   // useEffect(() => {

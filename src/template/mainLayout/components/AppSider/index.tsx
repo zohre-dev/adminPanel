@@ -7,6 +7,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "../../../../hooks/mediaQuery";
 import { BreakPoints } from "../../../../constants/breakPointsNumber";
 import SiderMenu from "../SiderMenu";
+import { Link } from "react-router-dom";
 
 const AppSider: FC = () => {
   const { values, dispatch } = useMainLayoutContext();
@@ -46,6 +47,16 @@ const AppSider: FC = () => {
         onClick={handleClick}
       />
       <SiderMenu />
+
+      <Link to="/customers/editCustomer">edit customer</Link>
+      <br />
+      <Link to="/customers/newCustomerByFile">new customer by file</Link>
+
+      <br />
+      <Link to="/customers/uploadWrong">uploadWrong</Link>
+
+      <br />
+      <Link to="/customers/uploading">uploading</Link>
     </Sider>
   );
 };
