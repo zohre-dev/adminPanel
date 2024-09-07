@@ -10,5 +10,6 @@ export enum ROUTES {
   editCustomer = "/customers/editCustomer",
   uploadWrong = "/customers/uploadWrong",
   uploading = "/customers/uploading",
+  showCustomer = "/customers/showCustomer",
   login = "/login",
 }

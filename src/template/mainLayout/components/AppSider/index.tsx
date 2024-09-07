@@ -57,6 +57,8 @@ const AppSider: FC = () => {
 
       <br />
       <Link to="/customers/uploading">uploading</Link>
+      <br />
+      <Link to="/customers/showCustomer">showCustomer</Link>
     </Sider>
   );
 };
