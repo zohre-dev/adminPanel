@@ -17,7 +17,8 @@ const AppHeader: React.FC = () => {
   const userName = useAppSelector(selectUsername);
   const isLabtop = useMediaQuery(BreakPoints.labtop); //greater than 991 is laptob size
   const { dispatch } = useMainLayoutContext();
-  const { setOpenDrawer } = dispatch;
+  const { setOpenDrawer, setOpenNotificationDrawer, setOpenCommentsDrawer } =
+    dispatch;
 
   const items = [
     {
@@ -80,6 +81,7 @@ const AppHeader: React.FC = () => {
 
       <Flex align="center" gap="small">
         <Button
+          onClick={() => setOpenNotificationDrawer(true)}
           className="headerButton"
           icon={
             <Badge dot={true}>
@@ -87,7 +89,11 @@ const AppHeader: React.FC = () => {
             </Badge>
           }
         />
-        <Button className="headerButton" icon={<MailOutlined />} />
+        <Button
+          className="headerButton"
+          icon={<MailOutlined />}
+          onClick={() => setOpenCommentsDrawer(true)}
+        />
         <Flex
           className="border rounded-md bg-white h-10 px-2"
           gap="small"

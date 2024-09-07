@@ -1,16 +1,19 @@
 import { Layout } from "antd";
-
 import AppSider from "./components/AppSider";
 import AppHeader from "./components/AppHeader";
 import { Content } from "antd/es/layout/layout";
 import { Outlet } from "react-router-dom";
 import { FC } from "react";
 import { MainLayoutProvider } from "./context";
+import NotificationDrawer from "./components/NotificationDrawer";
+import CommentsDrawer from "./components/CommentsDrawer";
 
 export const MainLayout: FC = () => {
   return (
     <MainLayoutProvider>
       <Layout className="min-h-screen">
+        <NotificationDrawer />
+        <CommentsDrawer />
         <AppSider />
         <Layout>
           <AppHeader />
