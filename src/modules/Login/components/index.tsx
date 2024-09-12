@@ -77,6 +77,7 @@ const Login = () => {
           label="Password"
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
+          className="w-full"
           rules={[
             {
               required: true,

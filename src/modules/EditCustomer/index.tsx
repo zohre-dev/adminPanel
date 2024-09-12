@@ -24,6 +24,7 @@ const EditCustomer = () => {
   const [form] = Form.useForm();
   const { id } = useParams();
   const { data } = useGetCustomerByIdQuery(id!);
+  console.log("data", data);
   const [trigger, { data: dataEditMutation }] = useEditCustomerByIdMutation();
   const [formFields, setFormFields] = useState<ICustomer>(initialFormValues);
   const { firstName } = formFields;
@@ -44,7 +45,8 @@ const EditCustomer = () => {
   };
   useEffect(() => {
     if (data) {
-      setFormFields({ ...data });
+      // setFormFields({ ...data });
+      form.setFieldsValue(data);
     }
   }, [data]);
   return (
@@ -53,6 +55,7 @@ const EditCustomer = () => {
       <Breadcrum />
       <Flex justify="space-between" gap={16} className="mt-8 ">
         <Form
+          form={form}
           name="validateOnly"
           layout="vertical"
           className="p-4 bg-white rounded-md"
@@ -68,7 +71,6 @@ const EditCustomer = () => {
               },
             ]}
             className="font-medium text-sm mb-8"
-            initialValue={firstName}
           >
             <Input size="large" className="" />
           </Form.Item>

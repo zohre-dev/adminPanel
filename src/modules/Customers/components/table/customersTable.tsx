@@ -43,8 +43,8 @@ const CustomersTable: React.FC = () => {
               ...omit(defaultOnCell, "className"),
               className:
                 (rowIndex || 0) % 2 !== 0
-                  ? `${defaultClassName} !bg-[#F8F9FA] `
-                  : `${defaultClassName} `,
+                  ? `${defaultClassName} !bg-[#F8F9FA] !px-8 `
+                  : `${defaultClassName} !px-8`,
             };
           },
         };
@@ -53,6 +53,7 @@ const CustomersTable: React.FC = () => {
   return (
     <Flex align="center" className="p-4 bg-white rounded-lg">
       <Table
+        rowKey={(record) => record.id}
         size="small"
         className="w-full"
         columns={newColumns}

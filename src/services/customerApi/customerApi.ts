@@ -24,7 +24,7 @@ export const customerApi = createApi({
         method: "DELETE",
       }),
     }),
-    createCustomer: builder.mutation({
+    createCustomer: builder.mutation<void, ICustomer>({
       query: (body) => ({
         url: `customers`,
         method: "POST",

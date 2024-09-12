@@ -25,6 +25,7 @@ export const Routes: FC = () => {
     const { userToken, userName } = JSON.parse(
       localStorage.getItem(USER_INFO) || "{}"
     );
+
     if (userToken && userName)
       patcher(setUser({ name: userName, token: userToken }));
   }, []);

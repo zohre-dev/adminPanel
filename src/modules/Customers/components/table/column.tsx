@@ -8,6 +8,7 @@ import ITableItems from "./items";
 import { useState } from "react";
 import { useDeleteCustomerMutation } from "../../../../services/customerApi/customerApi";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../../routes/routesUrls";
 
 export const TableColumns = () => {
   const [open, setOpen] = useState(false);
@@ -30,23 +31,13 @@ export const TableColumns = () => {
 
   const columns: TableColumnsType<ITableItems> = [
     {
-      title: "id",
-      dataIndex: "id",
-      key: "id",
-      // onCell: (record, rowIndex) => {
-      //   return {
-      //     // className: "hidden",
-      //     // style: { display: "none" },
-      //   };
-      // },
-    },
-    {
       title: "#",
       dataIndex: "rowNum",
       key: "rowNum",
       rowScope: "row",
       width: 64,
       fixed: "left",
+      className: "!text-center",
 
       //   onCell: (record, rowIndex) => {
       //     return {
@@ -105,7 +96,9 @@ export const TableColumns = () => {
             <Button
               className="tableActionButton"
               icon={<ExportOutlined />}
-              onClick={() => navigate(`/customers/showCustomer/${record.id}`)}
+              onClick={() =>
+                navigate(ROUTES.showCustomer.replace(":id", `${record.id}`))
+              }
             />
             <Button
               className="tableActionButton"
@@ -118,6 +111,7 @@ export const TableColumns = () => {
               onClick={() => {
                 Modal.confirm({
                   title: "Are you sure?",
+                  open,
                   footer: (_, { CancelBtn }) => (
                     <>
                       <Button onClick={() => handleDelete(record.id)}>

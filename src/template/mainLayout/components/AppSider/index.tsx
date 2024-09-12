@@ -37,7 +37,8 @@ const AppSider: FC = () => {
       trigger={null}
       collapsible
       collapsed={collapsed}
-      className="relative p-8"
+      className="relative p-8 "
+      width={240}
     >
       <Button
         className={`headerButtons z-10 absolute  top-[12px]   ${
