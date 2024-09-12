@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 export const TableColumns = () => {
   const [open, setOpen] = useState(false);
   const [trigger] = useDeleteCustomerMutation();
-  console.log("zozo", useDeleteCustomerMutation());
+
   const { message } = App.useApp();
   const navigate = useNavigate();
 
