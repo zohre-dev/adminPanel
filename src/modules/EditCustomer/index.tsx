@@ -25,7 +25,6 @@ const EditCustomer = () => {
   const { id } = useParams();
   const { data } = useGetCustomerByIdQuery(id!);
   const [trigger, { data: dataEditMutation }] = useEditCustomerByIdMutation();
-  console.log("giso", data);
   const [formFields, setFormFields] = useState<ICustomer>(initialFormValues);
   const { firstName } = formFields;
 
