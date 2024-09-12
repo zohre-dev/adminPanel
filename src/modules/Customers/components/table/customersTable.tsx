@@ -5,16 +5,31 @@ import { Flex, type TableColumnsType } from "antd";
 import Table from "antd/es/table";
 import { omit } from "lodash";
 import ITableItems from "./items";
-import { createDataSource } from "./dataSource";
 import { TableColumns } from "./column";
-
-const dataSource = createDataSource();
+import { useGetAllCustomersQuery } from "../../../../services/customerApi/customerApi";
 
 const CustomersTable: React.FC = () => {
+  const { data } = useGetAllCustomersQuery();
+  const TableDataSource: ITableItems[] = [];
+
+  if (data) {
+    let tabelRowNum = 0;
+    data.map((record: any) => {
+      tabelRowNum += 1;
+      TableDataSource.push({
+        rowNum: tabelRowNum,
+        fullname: record.firstName + " " + record.lastName,
+        status: record.status,
+        email: record.email,
+        birthDate: record.birthDayDate,
+        id: record.id,
+      });
+    });
+  }
+
   const columns = TableColumns();
   const newColumns: TableColumnsType<ITableItems> = columns
     ? columns.map((column) => {
-        console.log("show column", column);
         return {
           ...column,
           onCell: (record, rowIndex) => {
@@ -41,7 +56,7 @@ const CustomersTable: React.FC = () => {
         size="small"
         className="w-full"
         columns={newColumns}
-        dataSource={dataSource}
+        dataSource={TableDataSource}
         pagination={{
           pageSize: 10,
           position: ["bottomLeft"],

@@ -1,0 +1,64 @@
+{
+  "customers": [
+    {
+      "firstName": "roya",
+      "lastName": "majdi",
+      "idNumber": "123456789",
+      "birthDayDate": "2006/05/14",
+      "phoneNumber": "09357974370",
+      "email": "roya@gmail.com",
+      "status": "approved",
+      "id": "38e00db922f48455465040c2"
+    },
+    {
+      "id": "48e00db922f48455465040c2",
+      "firstName": "nima",
+      "lastName": "shahabi",
+      "IdNumber": "875467842",
+      "birthDayDate": "2020/08/14",
+      "phoneNumber": "09395789412",
+      "status": "blocked",
+      "email": "nima@gmail.com"
+    },
+    {
+      "id": "58e00db922f48455465040c2",
+      "firstName": "nasim",
+      "lastName": "shahabi",
+      "IdNumber": "875467842",
+      "birthDayDate": "2020/08/14",
+      "phoneNumber": "09395789412",
+      "status": "blocked",
+      "email": "nooshin@gmail.com"
+    },
+    {
+      "id": "68e00db922f48455465040c2",
+      "firstName": "ziba",
+      "lastName": "shahabi",
+      "IdNumber": "875467842",
+      "birthDayDate": "2020/08/14",
+      "phoneNumber": "09395789412",
+      "status": "blocked",
+      "email": "nooshin@gmail.com"
+    },
+    {
+      "id": "1a2e",
+      "firstName": "elehe",
+      "lastName": "abaspour",
+      "idNumber": "123456789",
+      "birthDayDate": "2023/08/14",
+      "phoneNumber": "09368794520",
+      "status": "rejected",
+      "email": "elehe@gmail.com"
+    },
+    {
+      "id": "da61",
+      "firstName": "sahar",
+      "lastName": "rajabi",
+      "idNumber": "852369741",
+      "birthDayDate": "2019/04/03",
+      "phoneNumber": "0936852147",
+      "status": "blocked",
+      "email": "sahar@gmail.com"
+    }
+  ]
+}

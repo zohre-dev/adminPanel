@@ -19,6 +19,10 @@ export const privateRoutes: RouteObject[] = [
         path: ROUTES.home,
         element: <CustomersPage />,
       },
+      {
+        path: ROUTES.customers,
+        element: <CustomersPage />,
+      },
 
       {
         path: ROUTES.newCustomer,

@@ -8,6 +8,8 @@ import {
 } from "@ant-design/icons";
 import { Image, MenuProps } from "antd";
 import Logo from "../../../../assets/img/Logo.png";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../../../routes/routesUrls";
 
 export const menuItems: MenuProps["items"] = [
   {
@@ -17,12 +19,12 @@ export const menuItems: MenuProps["items"] = [
   {
     key: "1",
     icon: <HomeOutlined />,
-    label: "DASHBOARD",
+    label: <Link to={ROUTES.home}>DASHBOARD</Link>,
   },
   {
     key: "2",
     icon: <UsergroupDeleteOutlined />,
-    label: "CUSTOMERS",
+    label: <Link to={ROUTES.home}>CUSTOMERS</Link>,
   },
   {
     key: "3",

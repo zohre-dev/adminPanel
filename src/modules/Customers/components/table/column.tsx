@@ -3,24 +3,43 @@ import {
   EditOutlined,
   ExportOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, Flex, TableColumnsType, Modal } from "antd";
+import { Button, Flex, TableColumnsType, Modal, App } from "antd";
 import ITableItems from "./items";
 import { useState } from "react";
-
-// ant-table-container  , ant-table-cell ,thead/tr/th/ant-table-cell
+import { useDeleteCustomerMutation } from "../../../../services/customerApi/customerApi";
+import { useNavigate } from "react-router-dom";
 
 export const TableColumns = () => {
   const [open, setOpen] = useState(false);
-  const showModal = () => {
-    setOpen(true);
-  };
-  const handleOk = () => {
+  const [trigger] = useDeleteCustomerMutation();
+  console.log("zozo", useDeleteCustomerMutation());
+  const { message } = App.useApp();
+  const navigate = useNavigate();
+
+  const handleClose = () => {
     setOpen(false);
   };
-  const handleCancel = () => {
-    setOpen(false);
+  const handleDelete = async (id: string) => {
+    await trigger(id).then((result) => {
+      if (result.data) {
+        handleClose();
+        message.success("Deleted Successfuly");
+      }
+    });
   };
+
   const columns: TableColumnsType<ITableItems> = [
+    {
+      title: "id",
+      dataIndex: "id",
+      key: "id",
+      // onCell: (record, rowIndex) => {
+      //   return {
+      //     // className: "hidden",
+      //     // style: { display: "none" },
+      //   };
+      // },
+    },
     {
       title: "#",
       dataIndex: "rowNum",
@@ -28,6 +47,7 @@ export const TableColumns = () => {
       rowScope: "row",
       width: 64,
       fixed: "left",
+
       //   onCell: (record, rowIndex) => {
       //     return {
       //       onClick: () => {
@@ -47,8 +67,21 @@ export const TableColumns = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: () => {
-        return <Badge size="default" status="success" />;
+      render: (text) => {
+        return (
+          <Flex align="center" gap={6}>
+            <div
+              className={`w-3 h-3 rounded-full border border-[#DEE2E6] ${
+                text === "approved"
+                  ? "bg-[#56BA28]"
+                  : text === "rejected"
+                  ? "bg-[#FF1F25]"
+                  : "bg-[#495057]"
+              }`}
+            ></div>
+            {text.charAt(0).toUpperCase() + text.slice(1)}
+          </Flex>
+        );
       },
     },
 
@@ -66,21 +99,28 @@ export const TableColumns = () => {
       title: "",
       dataIndex: "action",
       key: "action",
-      render: () => {
+      render: (text, record, rowIndex) => {
         return (
           <Flex align="center" justify="center" gap="small">
-            <Button className="tableActionButton" icon={<ExportOutlined />} />
-            <Button className="tableActionButton" icon={<EditOutlined />} />
+            <Button
+              className="tableActionButton"
+              icon={<ExportOutlined />}
+              onClick={() => navigate(`/customers/showCustomer/${record.id}`)}
+            />
+            <Button
+              className="tableActionButton"
+              icon={<EditOutlined />}
+              onClick={() => navigate(`/customers/editCustomer/${record.id}`)}
+            />
             <Button
               className="tableActionButton"
               icon={<DeleteOutlined />}
               onClick={() => {
                 Modal.confirm({
                   title: "Are you sure?",
-
                   footer: (_, { CancelBtn }) => (
                     <>
-                      <Button>
+                      <Button onClick={() => handleDelete(record.id)}>
                         <DeleteOutlined />
                         Delete
                       </Button>

@@ -7,9 +7,9 @@ export enum ROUTES {
   help = "/help",
   newCustomer = "/customers/newCustomer",
   newCustomerByFile = "/customers/newCustomerByFile",
-  editCustomer = "/customers/editCustomer",
+  editCustomer = "/customers/editCustomer/:id",
   uploadWrong = "/customers/uploadWrong",
   uploading = "/customers/uploading",
-  showCustomer = "/customers/showCustomer",
+  showCustomer = "/customers/showCustomer/:id",
   login = "/login",
 }

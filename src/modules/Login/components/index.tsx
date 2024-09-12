@@ -19,17 +19,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   const user = useAppSelector(selectUsername);
-  console.log("zozo", user);
 
   const [form] = Form.useForm();
 
   const onFinish = async (values: ILoginFields) => {
-    // const payload = {
-    //   email: values.email,
-    //   password: values.password,
-    //   remember: values.remember ? true : false,
-    // };
-
     await trigger({ email: values.email, password: values.password }).then(
       (result) => {
         if (result.data) {
@@ -95,15 +88,13 @@ const Login = () => {
           <Input.Password placeholder="Password" size="large" />
         </Form.Item>
 
-        <Form.Item>
-          <Flex justify="space-between">
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+        <Flex justify="space-between" className="py-3">
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
 
-            <Link href="#"> Forgot password?</Link>
-          </Flex>
-        </Form.Item>
+          <Link href="#"> Forgot password?</Link>
+        </Flex>
 
         <Button
           type="primary"
@@ -112,6 +103,7 @@ const Login = () => {
           block
           icon={<LoginOutlined />}
           size="large"
+          className="mt-2"
         >
           Sign In
         </Button>

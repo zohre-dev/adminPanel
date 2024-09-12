@@ -4,4 +4,5 @@ export default interface ITableItems {
   status: "Approved" | "Blocked" | "Rejected";
   email: string;
   birthDate: string;
+  id: string;
 }
