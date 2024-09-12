@@ -1,36 +1,6 @@
 {
   "customers": [
     {
-      "firstName": "roya",
-      "lastName": "majdi",
-      "idNumber": "123456789",
-      "birthDayDate": "2006/05/14",
-      "phoneNumber": "09357974370",
-      "email": "roya@gmail.com",
-      "status": "approved",
-      "id": "38e00db922f48455465040c2"
-    },
-    {
-      "id": "48e00db922f48455465040c2",
-      "firstName": "nima",
-      "lastName": "shahabi",
-      "IdNumber": "875467842",
-      "birthDayDate": "2020/08/14",
-      "phoneNumber": "09395789412",
-      "status": "blocked",
-      "email": "nima@gmail.com"
-    },
-    {
-      "id": "58e00db922f48455465040c2",
-      "firstName": "nasim",
-      "lastName": "shahabi",
-      "IdNumber": "875467842",
-      "birthDayDate": "2020/08/14",
-      "phoneNumber": "09395789412",
-      "status": "blocked",
-      "email": "nooshin@gmail.com"
-    },
-    {
       "id": "68e00db922f48455465040c2",
       "firstName": "ziba",
       "lastName": "shahabi",
@@ -42,7 +12,7 @@
     },
     {
       "id": "1a2e",
-      "firstName": "elehe",
+      "firstName": "elahe",
       "lastName": "abaspour",
       "idNumber": "123456789",
       "birthDayDate": "2023/08/14",
@@ -59,6 +29,16 @@
       "phoneNumber": "0936852147",
       "status": "blocked",
       "email": "sahar@gmail.com"
+    },
+    {
+      "id": "ab1a",
+      "firstName": "mohammad",
+      "lastName": "khaleghi",
+      "idNumber": "123456789",
+      "birthDayDate": "2005/03/17",
+      "phoneNumber": "09356892478",
+      "status": "rejected",
+      "email": "mohammad@gmail.com"
     }
   ]
 }
