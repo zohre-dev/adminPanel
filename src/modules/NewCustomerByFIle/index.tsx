@@ -1,7 +1,8 @@
 import { Button, Flex, Form, Space, Typography } from "antd";
 import Title from "antd/es/typography/Title";
-import Breadcrum from "./components/breadcrum/breadcrum";
 import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
+import BreadCrum from "../../models/breadcrum/breadcrum";
+import { breadcrumMembers } from "./breadcrumMembers";
 
 const NewCustomerByFile = () => {
   const [form] = Form.useForm();
@@ -13,7 +14,7 @@ const NewCustomerByFile = () => {
         <Title level={1}>New Customer</Title>
       </Flex>
 
-      <Breadcrum />
+      <BreadCrum members={breadcrumMembers} />
       <Flex
         vertical
         align="center"

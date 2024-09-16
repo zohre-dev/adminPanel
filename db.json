@@ -1,23 +1,23 @@
 {
   "customers": [
     {
-      "id": "68e00db922f48455465040c2",
       "firstName": "ziba",
       "lastName": "shahabi",
-      "IdNumber": "875467842",
-      "birthDayDate": "2020/08/14",
+      "idNumber": "123456789",
+      "birthDayDate": "03/03/",
       "phoneNumber": "09395789412",
-      "status": "blocked",
-      "email": "nooshin@gmail.com"
+      "status": 2,
+      "email": "nooshin@gmail.com",
+      "id": "68e00db922f48455465040c2"
     },
     {
       "id": "1a2e",
-      "firstName": "elahe",
+      "firstName": "mary",
       "lastName": "abaspour",
       "idNumber": "123456789",
-      "birthDayDate": "2023/08/14",
+      "birthDayDate": "09/10/2023",
       "phoneNumber": "09368794520",
-      "status": "rejected",
+      "status": 1,
       "email": "elehe@gmail.com"
     },
     {
@@ -25,9 +25,9 @@
       "firstName": "sahar",
       "lastName": "rajabi",
       "idNumber": "852369741",
-      "birthDayDate": "2019/04/03",
+      "birthDayDate": "03/04/2019",
       "phoneNumber": "0936852147",
-      "status": "blocked",
+      "status": 1,
       "email": "sahar@gmail.com"
     },
     {
@@ -35,10 +35,40 @@
       "firstName": "mohammad",
       "lastName": "khaleghi",
       "idNumber": "123456789",
-      "birthDayDate": "2005/03/17",
+      "birthDayDate": "17/03/2005",
       "phoneNumber": "09356892478",
-      "status": "rejected",
+      "status": 2,
       "email": "mohammad@gmail.com"
+    },
+    {
+      "id": "e7d2",
+      "firstName": "maryam",
+      "lastName": "elahi",
+      "idNumber": "123456789",
+      "birthDayDate": "07/08/1993",
+      "phoneNumber": "45896325",
+      "status": 3,
+      "email": "maryam@yahoo.com"
+    },
+    {
+      "id": "8fcb",
+      "firstName": "majid",
+      "lastName": "zibakalam",
+      "idNumber": "2558947132",
+      "birthDayDate": "02/07/1997",
+      "phoneNumber": "09387942563",
+      "status": 1,
+      "email": "majid@gmail.com"
+    },
+    {
+      "id": "7c9c",
+      "firstName": "ali",
+      "lastName": "alavi",
+      "idNumber": "1234563",
+      "birthDayDate": "13/11/2005",
+      "phoneNumber": "215662236",
+      "status": 2,
+      "email": "ali@gmail.com"
     }
   ]
 }

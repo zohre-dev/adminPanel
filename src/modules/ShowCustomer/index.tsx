@@ -1,9 +1,12 @@
 import { Button, Flex, Space, Typography } from "antd";
 import Title from "antd/es/typography/Title";
-import Breadcrum from "./components/breadcrum/breadcrum";
+
 import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { useGetCustomerByIdQuery } from "../../services/customerApi/customerApi";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { ROUTES } from "../../routes/routesUrls";
+import BreadCrum from "../../models/breadcrum/breadcrum";
+import { breadcrumMembers } from "./breadcrumMembers";
 
 const ShowCustomer = () => {
   const { id } = useParams();
@@ -12,11 +15,15 @@ const ShowCustomer = () => {
   return (
     <Space className="px-8 py-4 w-full " direction="vertical" size="middle">
       <Title level={1}>Show Customer</Title>
-      <Breadcrum />;
+      <BreadCrum members={breadcrumMembers} />;
       <Flex vertical gap={30} className="mt-8 p-4 bg-white">
         <Flex align="center" gap="small" justify="end">
-          <Button icon={<UnorderedListOutlined />}>Customers</Button>
-          <Button icon={<EditOutlined />}>Edit</Button>
+          <Button icon={<UnorderedListOutlined />}>
+            <Link to={ROUTES.customers}>Customers</Link>
+          </Button>
+          <Button icon={<EditOutlined />}>
+            <Link to={ROUTES.editCustomer.replace(":id", `${id}`)}>Edit</Link>
+          </Button>
         </Flex>
         <Space direction="vertical">
           <Title level={5}>Full Name</Title>
@@ -25,7 +32,12 @@ const ShowCustomer = () => {
         <Space direction="vertical">
           <Title level={5}>Status</Title>
           <Text>
-            {data && data.status.charAt(0).toUpperCase() + data.status.slice(1)}
+            {data?.status === 1
+              ? "Approved"
+              : data?.status === 2
+              ? "Rejected"
+              : "Blocked"}
+            {/* {data && data.status.charAt(0).toUpperCase() + data.status.slice(1)} */}
           </Text>
         </Space>
         <Space direction="vertical">
@@ -42,7 +54,7 @@ const ShowCustomer = () => {
         </Space>
         <Space direction="vertical">
           <Title level={5}>Date Of Birth</Title>
-          <Text>{data && data.birthDayDate}</Text>
+          <Text>{data && `${data.day}/${data.month}/${data.year}`}</Text>
         </Space>
       </Flex>
     </Space>

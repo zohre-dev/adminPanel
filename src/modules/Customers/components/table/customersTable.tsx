@@ -7,9 +7,12 @@ import { omit } from "lodash";
 import ITableItems from "./items";
 import { TableColumns } from "./column";
 import { useGetAllCustomersQuery } from "../../../../services/customerApi/customerApi";
+import { useCustomerContext } from "../../context";
 
 const CustomersTable: React.FC = () => {
-  const { data } = useGetAllCustomersQuery();
+  const { values } = useCustomerContext();
+  const { searchTerm } = values;
+  const { data } = useGetAllCustomersQuery(searchTerm);
   const TableDataSource: ITableItems[] = [];
 
   if (data) {

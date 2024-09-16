@@ -1,39 +1,57 @@
 import {
   App,
   Button,
-  Dropdown,
+  DatePicker,
   Flex,
   Form,
   Image,
   Input,
+  Radio,
+  RadioChangeEvent,
+  Select,
   Space,
-  Typography,
 } from "antd";
 import Title from "antd/es/typography/Title";
-import Breadcrum from "./breadcrum/breadcrum";
 import SelectFileImage from "../../../assets/img/selectfileimage.png";
-import { dropDownDays } from "../../../models/dayDropDownItems";
-import { DownOutlined } from "@ant-design/icons";
-import { dropDownYears } from "../../../models/yearDropDownItems";
-import { dropDownMonths } from "../../../models/monthDropDownItems";
+
 import { useCreateCustomerMutation } from "../../../services/customerApi/customerApi";
 import { ICustomer } from "../../../models/customerType";
 import { useNavigate } from "react-router-dom";
+import { dayItems } from "../../../models/days";
+import { monthItems } from "../../../models/months";
+import BreadCrum from "../../../models/breadcrum/breadcrum";
+import { breadcrumMembers } from "../breadcrumMembers";
 
 const NewCustomerManually = () => {
-  const { Text } = Typography;
-  const [form] = Form.useForm();
   const [trigger] = useCreateCustomerMutation();
   const { message } = App.useApp();
   const navigate = useNavigate();
+  let selectedDay: string = "";
+  let selectedMonth: string = "";
+  let selectedYear: string | string[] = "";
+  let selectedStatus: number = 1;
+
+  const handleYearPickerChange = (dateString: string | string[]) => {
+    selectedYear = dateString;
+  };
+  const handleSelectMonthChange = (value: string) => {
+    selectedMonth = value;
+  };
+  const handleSelectDayChange = (value: string) => {
+    selectedDay = value;
+  };
+  const handleStatusChange = (e: RadioChangeEvent) => {
+    selectedStatus = e.target.value;
+  };
+
   const onFinish = async (values: ICustomer) => {
     await trigger({
       firstName: values.firstName,
       lastName: values.lastName,
       idNumber: values.idNumber,
-      birthDayDate: values.birthDayDate,
+      birthDayDate: `${selectedDay}/${selectedMonth}/${selectedYear}`,
       phoneNumber: values.phoneNumber,
-      status: values.status,
+      status: selectedStatus,
       email: values.email,
     }).then((result) => {
       if (result.data) {
@@ -45,12 +63,12 @@ const NewCustomerManually = () => {
   return (
     <Space className="px-8 py-4 w-full " direction="vertical" size="middle">
       <Title level={1}>New Customer</Title>
-      <Breadcrum />
+      <BreadCrum members={breadcrumMembers} />
       <Flex justify="space-between" gap={16} className="mt-8 ">
         <Form
           name="validateOnly"
           layout="vertical"
-          className="p-4 bg-white rounded-md flex-[60%]"
+          className="p-4 bg-white rounded-md flex-[1]"
           onFinish={onFinish}
         >
           <Form.Item
@@ -90,7 +108,11 @@ const NewCustomerManually = () => {
             ]}
             className="font-medium text-sm mb-8"
           >
-            <Input size="large" className="" />
+            <Radio.Group onChange={handleStatusChange} defaultValue={1}>
+              <Radio value={1}>Approved</Radio>
+              <Radio value={2}>Rejected</Radio>
+              <Radio value={3}>Blocked</Radio>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item
@@ -106,22 +128,10 @@ const NewCustomerManually = () => {
           >
             <Input size="large" className="" />
           </Form.Item>
-          <Form.Item
-            name="birthDayDate"
-            label="Birth Day Date"
-            layout="vertical"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-            className="font-medium text-sm mb-8"
-          >
-            <Input size="large" className="" />
-          </Form.Item>
-          {/* <Title level={4}>Date Of Birth</Title> 
-          <Flex align="center" gap={16}>
+          <Title level={4}>Date Of Birth</Title>
+          <Flex align="center" gap={16} className="w-full">
             <Form.Item
+              className="flex-[1]"
               name="month"
               label="Month"
               layout="vertical"
@@ -131,15 +141,15 @@ const NewCustomerManually = () => {
                 },
               ]}
             >
-              <Dropdown menu={dropDownMonths}>
-                <Space>
-                  September
-                  <DownOutlined height={20} width={20} />
-                </Space>
-              </Dropdown>
+              <Select
+                placeholder="Select Month"
+                options={monthItems}
+                onChange={handleSelectMonthChange}
+              />
             </Form.Item>
-          
+
             <Form.Item
+              className="flex-[1]"
               name="day"
               label="Day"
               layout="vertical"
@@ -149,15 +159,15 @@ const NewCustomerManually = () => {
                 },
               ]}
             >
-              <Dropdown menu={dropDownDays}>
-                <Space>
-                  24
-                  <DownOutlined height={20} width={20} />
-                </Space>
-              </Dropdown>
+              <Select
+                placeholder="Select Day"
+                options={dayItems}
+                onChange={handleSelectDayChange}
+              />
             </Form.Item>
-         
+
             <Form.Item
+              className="flex-[1]"
               name="year"
               label="Year"
               layout="vertical"
@@ -167,14 +177,9 @@ const NewCustomerManually = () => {
                 },
               ]}
             >
-              <Dropdown menu={dropDownYears}>
-                <Space>
-                  2023
-                  <DownOutlined height={20} width={20} />
-                </Space>
-              </Dropdown>
+              <DatePicker onChange={handleYearPickerChange} picker="year" />
             </Form.Item>
-          </Flex> */}
+          </Flex>
 
           <Form.Item
             name="phoneNumber"

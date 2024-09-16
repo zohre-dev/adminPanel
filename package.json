@@ -14,6 +14,7 @@
     "@ant-design/icons": "^5.4.0",
     "@reduxjs/toolkit": "^2.2.7",
     "antd": "^5.20.1",
+    "dayjs": "^1.11.13",
     "json-server": "^1.0.0-beta.2",
     "lodash": "^4.17.21",
     "react": "^18.3.1",

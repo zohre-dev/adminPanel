@@ -7,18 +7,17 @@ import { useLoginUserMutation } from "../../../services/authAPi/authApi";
 import { useNavigate } from "react-router-dom";
 import { patcher } from "../../../store/store";
 import { ROUTES } from "../../../routes/routesUrls";
-import { useAppSelector } from "../../../hooks/hook";
-import { selectUsername, setUser } from "../../../feachers/auth/authSlice";
+
+import { setUser } from "../../../feachers/auth/authSlice";
+import { useState } from "react";
 
 const { Title } = Typography;
 
 const Login = () => {
+  const [rememberChecked, setRememberChecked] = useState<boolean>(false);
   const [trigger, { data }] = useLoginUserMutation();
-
   const { message } = App.useApp();
   const navigate = useNavigate();
-
-  const user = useAppSelector(selectUsername);
 
   const [form] = Form.useForm();
 
@@ -31,6 +30,7 @@ const Login = () => {
             setUser({
               name: result.data?.user.name,
               token: result.data?.token,
+              rememberChecked: rememberChecked,
             })
           );
           navigate(ROUTES.home);
@@ -91,7 +91,12 @@ const Login = () => {
 
         <Flex justify="space-between" className="py-3">
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox
+              checked={rememberChecked}
+              onChange={(e) => setRememberChecked(e.target.checked)}
+            >
+              Remember me
+            </Checkbox>
           </Form.Item>
 
           <Link href="#"> Forgot password?</Link>

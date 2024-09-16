@@ -13,14 +13,14 @@ import { ROUTES } from "../../../../routes/routesUrls";
 
 export const menuItems: MenuProps["items"] = [
   {
-    key: "0",
+    key: "1",
     label: <Image src={Logo} />,
   },
-  {
-    key: "1",
-    icon: <HomeOutlined />,
-    label: <Link to={ROUTES.home}>DASHBOARD</Link>,
-  },
+  // {
+  //   key: "1",
+  //   icon: <HomeOutlined />,
+  //   label: <Link to={ROUTES.home}>DASHBOARD</Link>,
+  // },
   {
     key: "2",
     icon: <UsergroupDeleteOutlined />,

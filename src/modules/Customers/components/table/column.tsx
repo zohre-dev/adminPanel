@@ -63,14 +63,14 @@ export const TableColumns = () => {
           <Flex align="center" gap={6}>
             <div
               className={`w-3 h-3 rounded-full border border-[#DEE2E6] ${
-                text === "approved"
+                text === 1
                   ? "bg-[#56BA28]"
-                  : text === "rejected"
+                  : text === 2
                   ? "bg-[#FF1F25]"
                   : "bg-[#495057]"
               }`}
             ></div>
-            {text.charAt(0).toUpperCase() + text.slice(1)}
+            {text === 1 ? "Approved" : text === 2 ? "Rejected" : "Blocked"}
           </Flex>
         );
       },
