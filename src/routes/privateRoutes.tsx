@@ -6,8 +6,7 @@ import { MainLayout } from "../template/mainLayout";
 import NewCustomerManuallyPage from "../pages/private/NewCustomerManuallyPage";
 import EditCustomerPage from "../pages/private/EditCustomerPage";
 import NewCustomerByFilePage from "../pages/private/NewCustomerByFilePage";
-import UploadWrongPage from "../pages/private/UploadWrongPage";
-import UploadingPage from "../pages/private/UploadingPage";
+
 import ShowCustomerPage from "../pages/private/ShowCustomerPage";
 
 export const privateRoutes: RouteObject[] = [
@@ -36,14 +35,7 @@ export const privateRoutes: RouteObject[] = [
         path: ROUTES.newCustomerByFile,
         element: <NewCustomerByFilePage />,
       },
-      {
-        path: ROUTES.uploadWrong,
-        element: <UploadWrongPage />,
-      },
-      {
-        path: ROUTES.uploading,
-        element: <UploadingPage />,
-      },
+
       {
         path: ROUTES.showCustomer,
         element: <ShowCustomerPage />,

@@ -4,7 +4,7 @@ import { ROUTES } from "../../../../routes/routesUrls";
 const items = [
   {
     key: "1",
-    label: <Link to="/customers/newCustomer">Importing by a file</Link>,
+    label: <Link to={ROUTES.newCustomerByFile}>Importing by a file</Link>,
   },
   {
     key: "2",
