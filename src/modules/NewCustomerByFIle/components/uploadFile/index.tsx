@@ -64,8 +64,10 @@ const UploadFile = () => {
               if (file.size > 5000000) {
                 reject("file size exceeded");
                 message.error("file must be less than 5 MB");
+                setUploadStep(UPLOAD.uploadWrong);
               } else {
                 resolve("success");
+
                 // setUploadStep(UPLOAD.uploading);
               }
             });

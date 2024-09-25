@@ -2,7 +2,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Button, Flex, Image, Progress, Space, Typography } from "antd";
 import Title from "antd/es/typography/Title";
 import { useCustomerByFileContext } from "../../context";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import SelectedFileImage from "../../../../assets/img/selectfileimage.png";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,10 @@ import { ROUTES } from "../../../../routes/routesUrls";
 
 const Uploading = () => {
   const navigate = useNavigate();
-  const { values, dispatch } = useCustomerByFileContext();
-  const { progress, selectedFile, fileName } = values;
-  const { setProgress, setUploadStep, setSelectedFile } = dispatch;
+  const { values } = useCustomerByFileContext();
+  const { selectedFile, fileName } = values;
+  console.log("selectedFile", selectedFile);
+  const [progress, setProgress] = useState<number | undefined>();
 
   const { Text } = Typography;
 
@@ -54,7 +55,9 @@ const Uploading = () => {
         <Image src={SelectedFileImage} width={64} height={56} />
         <Space direction="vertical">
           <Text className="text-[#212529]">{fileName && fileName}</Text>
-          <Text className="text-[#6C757D]">34 KB</Text>
+          <Text className="text-[#6C757D]">
+            {selectedFile && selectedFile.size} KB
+          </Text>
           {progress && (
             <Progress percent={Math.ceil(progress * 100)} status="active" />
           )}
