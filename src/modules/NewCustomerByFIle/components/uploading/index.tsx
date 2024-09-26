@@ -2,7 +2,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Button, Flex, Image, Progress, Space, Typography } from "antd";
 import Title from "antd/es/typography/Title";
 import { useCustomerByFileContext } from "../../context";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import SelectedFileImage from "../../../../assets/img/selectfileimage.png";
 import { useNavigate } from "react-router-dom";
@@ -13,20 +13,22 @@ const Uploading = () => {
   const navigate = useNavigate();
   const { values } = useCustomerByFileContext();
   const { selectedFile, fileName } = values;
-  console.log("selectedFile", selectedFile);
   const [progress, setProgress] = useState<number | undefined>();
 
   const { Text } = Typography;
+  const controller = new AbortController();
 
-  const handleFileUpload = async () => {
+  const handleFileUpload = useCallback(async () => {
+    if (!selectedFile) return;
     const formData = new FormData();
     formData.append("file", selectedFile);
     await axios
-      .post("https://api.pdfrest.com/upload", formData, {
+      .post(uploadUrls.post, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Api-Key": "742b50b4-c744-40fd-a0fc-e72c7c85fbbb",
         },
+        signal: controller.signal,
         onUploadProgress: (progressEvent) => {
           // const { loaded, total } = progressEvent;
           // let percent = Math.floor((loaded * 100) / (total || 0));
@@ -47,16 +49,18 @@ const Uploading = () => {
       .then((response) => {
         console.log("response", response);
         if (response.status === 200) {
-          // setProgress(0);
           navigate(ROUTES.home);
         }
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFile]);
+  const onCancel = () => {
+    console.log("object");
+    controller.abort();
   };
   useEffect(() => {
-    if (selectedFile) {
-      handleFileUpload();
-    }
-  }, []);
+    handleFileUpload();
+  }, [handleFileUpload]);
   return (
     <Flex
       vertical
@@ -76,13 +80,20 @@ const Uploading = () => {
           <Text className="text-[#6C757D]">
             {selectedFile && selectedFile.size} KB
           </Text>
-          {progress && <Progress percent={progress} status="active" />}
+          {progress !== undefined && (
+            <Progress percent={progress} status="active" />
+          )}
         </Space>
       </Flex>
 
       <Title level={2}>Uploading...</Title>
 
-      <Button htmlType="reset" size="large" icon={<CloseOutlined />}>
+      <Button
+        htmlType="reset"
+        size="large"
+        icon={<CloseOutlined />}
+        onClick={onCancel}
+      >
         CANCEL
       </Button>
     </Flex>

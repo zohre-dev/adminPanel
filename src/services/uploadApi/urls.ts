@@ -1,3 +1,3 @@
 export const uploadUrls = {
-  post: "https://file.io",
+  post: "https://api.pdfrest.com/upload",
 };
