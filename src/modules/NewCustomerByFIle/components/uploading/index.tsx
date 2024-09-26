@@ -7,6 +7,7 @@ import axios from "axios";
 import SelectedFileImage from "../../../../assets/img/selectfileimage.png";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../../routes/routesUrls";
+import { uploadUrls } from "../../../../services/uploadApi/urls";
 
 const Uploading = () => {
   const navigate = useNavigate();
@@ -21,17 +22,34 @@ const Uploading = () => {
     const formData = new FormData();
     formData.append("file", selectedFile);
     await axios
-      .post("https://file.io", formData, {
+      .post("https://api.pdfrest.com/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "Api-Key": "742b50b4-c744-40fd-a0fc-e72c7c85fbbb",
         },
-        onUploadProgress: (event) => {
-          setProgress(event.progress);
+        onUploadProgress: (progressEvent) => {
+          // const { loaded, total } = progressEvent;
+          // let percent = Math.floor((loaded * 100) / (total || 0));
+          // console.log("percent", percent);
+          // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+          // if (percent < 100) {
+          //   setProgress(percent);
+          // }
+          const uploaded = progressEvent.loaded;
+          const currentPercent = Math.floor(
+            (uploaded / (progressEvent.total || 0)) * 100
+          );
+          if (currentPercent < 100) {
+            setProgress(currentPercent);
+          }
         },
       })
       .then((response) => {
-        console.log(response);
-        if (response.status === 200) navigate(ROUTES.home);
+        console.log("response", response);
+        if (response.status === 200) {
+          // setProgress(0);
+          navigate(ROUTES.home);
+        }
       });
   };
   useEffect(() => {
@@ -58,9 +76,7 @@ const Uploading = () => {
           <Text className="text-[#6C757D]">
             {selectedFile && selectedFile.size} KB
           </Text>
-          {progress && (
-            <Progress percent={Math.ceil(progress * 100)} status="active" />
-          )}
+          {progress && <Progress percent={progress} status="active" />}
         </Space>
       </Flex>
 

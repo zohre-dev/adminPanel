@@ -1,24 +1,13 @@
 {
   "customers": [
     {
-      "firstName": "ziba",
-      "lastName": "shahabi",
-      "idNumber": "123456789",
-      "birthDayDate": "03/03/",
-      "phoneNumber": "09395789412",
-      "status": 2,
-      "email": "nooshin@gmail.com",
-      "id": "68e00db922f48455465040c2"
-    },
-    {
-      "id": "1a2e",
       "firstName": "mary",
       "lastName": "abaspour",
       "idNumber": "123456789",
-      "birthDayDate": "09/10/2023",
+      "birthDayDate": "09/10/2020",
       "phoneNumber": "09368794520",
-      "status": 1,
-      "email": "elehe@gmail.com"
+      "email": "elehe@gmail.com",
+      "id": "1a2e"
     },
     {
       "id": "da61",

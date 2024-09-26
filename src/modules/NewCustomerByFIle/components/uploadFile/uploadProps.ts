@@ -2,6 +2,6 @@ export const fileUploadProps = {
   name: "fileUploader",
   multiple: false,
   showUploadList: false,
-  accept: ".xls, .xlsx",
+  accept: "*",
   maxCount: 1,
 };

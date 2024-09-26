@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export interface ICustomerPayload {
   id?: string;
   firstName: string;
@@ -15,7 +17,7 @@ export interface ICustomer {
   idNumber: string;
   day: string;
   month: string;
-  year: string;
+  year: string | Dayjs;
   phoneNumber: string;
   status: number;
   email: string;

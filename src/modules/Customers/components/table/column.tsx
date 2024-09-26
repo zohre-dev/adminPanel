@@ -3,7 +3,7 @@ import {
   EditOutlined,
   ExportOutlined,
 } from "@ant-design/icons";
-import { Button, Flex, TableColumnsType, Modal, App } from "antd";
+import { Button, Flex, TableColumnsType, App } from "antd";
 import ITableItems from "./items";
 import { useState } from "react";
 import { useDeleteCustomerMutation } from "../../../../services/customerApi/customerApi";
@@ -14,7 +14,7 @@ export const TableColumns = () => {
   const [open, setOpen] = useState(false);
   const [trigger] = useDeleteCustomerMutation();
 
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -109,12 +109,16 @@ export const TableColumns = () => {
               className="tableActionButton"
               icon={<DeleteOutlined />}
               onClick={() => {
-                Modal.confirm({
+                modal.confirm({
                   title: "Are you sure?",
-                  open,
+
                   footer: (_, { CancelBtn }) => (
                     <>
-                      <Button onClick={() => handleDelete(record.id)}>
+                      <Button
+                        onClick={() => {
+                          handleDelete(record.id);
+                        }}
+                      >
                         <DeleteOutlined />
                         Delete
                       </Button>

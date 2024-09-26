@@ -16,6 +16,7 @@ import Title from "antd/es/typography/Title";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useEditCustomerByIdMutation,
+  useGetAllCustomersQuery,
   useGetCustomerByIdQuery,
 } from "../../services/customerApi/customerApi";
 import { useEffect } from "react";
@@ -48,6 +49,7 @@ const EditCustomer = () => {
   let selectedDay: string = "";
   let selectedMonth: string = "";
   let selectedYear: string | string[] = "";
+  const { refetch } = useGetAllCustomersQuery("");
 
   let selectedStatus: number;
 
@@ -71,19 +73,22 @@ const EditCustomer = () => {
       firstName: values.firstName,
       lastName: values.lastName,
       idNumber: values.idNumber,
-      birthDayDate: `${selectedDay}/${selectedMonth}/${selectedYear}`,
+      birthDayDate: `${values.day}/${values.month}/${(
+        values.year as Dayjs
+      ).format("YYYY")}`,
       phoneNumber: values.phoneNumber,
       status: selectedStatus,
       email: values.email,
     }).then((result) => {
       if (result.data) message.success("edited successful");
+      refetch();
       navigate("/");
     });
   };
   useEffect(() => {
     if (data) {
-      // form.setFieldValue("year", dayjs(`${data.year}/01/01`, "YYYY-MM-DD"));
-      form.setFieldsValue(data);
+      const newData = { ...data, year: dayjs(`${data.year}/01/01`) };
+      form.setFieldsValue(newData);
     }
   }, [data]);
   return (
@@ -195,7 +200,7 @@ const EditCustomer = () => {
               />
             </Form.Item>
 
-            {/* <Form.Item
+            <Form.Item
               className="flex-[1]"
               name="year"
               label="Year"
@@ -206,16 +211,8 @@ const EditCustomer = () => {
                 },
               ]}
             >
-              <CustomDatepicker
-                defaultValue={data && dayjs(`${data.year}/01/01`, "YYYY-MM-DD")}
-        
-              />
-              <DatePicker
-                onChange={handleYearPickerChange}
-                picker="year"
-                defaultValue={data && data.year}
-              />
-            </Form.Item> */}
+              <DatePicker onChange={handleYearPickerChange} picker="year" />
+            </Form.Item>
           </Flex>
 
           <Form.Item
