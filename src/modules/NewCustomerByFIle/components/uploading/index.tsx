@@ -26,9 +26,11 @@ const Uploading = () => {
   const [findCustomer] = useLazyFindCustomerQuery();
 
   const { Text } = Typography;
+  const controller = new AbortController();
 
   const handleFileUpload = useCallback(async () => {
     if (!selectedFile) return;
+
     let reader = new FileReader();
     reader.onload = async (e: any) => {
       const data = e.target.result;
@@ -55,6 +57,7 @@ const Uploading = () => {
           "Content-Type": "multipart/form-data",
           "Api-Key": "742b50b4-c744-40fd-a0fc-e72c7c85fbbb",
         },
+        signal: controller.signal,
         onUploadProgress: (progressEvent) => {
           const uploaded = progressEvent.loaded;
           const currentPercent = Math.floor(
@@ -73,6 +76,7 @@ const Uploading = () => {
         }
       });
   }, [selectedFile]);
+
   useEffect(() => {
     handleFileUpload();
   }, [handleFileUpload]);
