@@ -19,16 +19,22 @@ import {
 const Uploading = () => {
   const navigate = useNavigate();
   const { values } = useCustomerByFileContext();
+<<<<<<< HEAD
   const { selectedFile } = values;
+=======
+  const { selectedFile, fileName } = values;
+>>>>>>> f1a029b1e280985011fff1633b1695fe12950ee9
   const [progress, setProgress] = useState<number | undefined>();
   const { refetch } = useGetAllCustomersQuery("");
   const [trigger] = useCreateCustomerMutation();
   const [findCustomer] = useLazyFindCustomerQuery();
 
   const { Text } = Typography;
+  const controller = new AbortController();
 
   const handleFileUpload = useCallback(async () => {
     if (!selectedFile) return;
+<<<<<<< HEAD
     let reader = new FileReader();
     reader.onload = async (e: any) => {
       const data = e.target.result;
@@ -51,10 +57,17 @@ const Uploading = () => {
     formData.append("file", selectedFile);
     await axios
       .post(uploadUrls.upload, formData, {
+=======
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    await axios
+      .post(uploadUrls.post, formData, {
+>>>>>>> f1a029b1e280985011fff1633b1695fe12950ee9
         headers: {
           "Content-Type": "multipart/form-data",
           "Api-Key": "742b50b4-c744-40fd-a0fc-e72c7c85fbbb",
         },
+        signal: controller.signal,
         onUploadProgress: (progressEvent) => {
           const uploaded = progressEvent.loaded;
           const currentPercent = Math.floor(
@@ -67,12 +80,24 @@ const Uploading = () => {
       })
       .then((response) => {
         if (response.status === 200) {
+<<<<<<< HEAD
           // setProgress(0);
           refetch();
           navigate(ROUTES.home);
         }
       });
   }, [selectedFile]);
+=======
+          navigate(ROUTES.home);
+        }
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFile]);
+  const onCancel = () => {
+    console.log("object");
+    controller.abort();
+  };
+>>>>>>> f1a029b1e280985011fff1633b1695fe12950ee9
   useEffect(() => {
     handleFileUpload();
   }, [handleFileUpload]);
@@ -105,7 +130,12 @@ const Uploading = () => {
 
       <Title level={2}>Uploading...</Title>
 
-      <Button htmlType="reset" size="large" icon={<CloseOutlined />}>
+      <Button
+        htmlType="reset"
+        size="large"
+        icon={<CloseOutlined />}
+        onClick={onCancel}
+      >
         CANCEL
       </Button>
     </Flex>
