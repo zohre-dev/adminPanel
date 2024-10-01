@@ -7,7 +7,6 @@ import {
   Image,
   Input,
   Radio,
-  RadioChangeEvent,
   Select,
   Space,
 } from "antd";
@@ -15,6 +14,7 @@ import {
 import Title from "antd/es/typography/Title";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  apiController,
   useEditCustomerByIdMutation,
   useGetAllCustomersQuery,
   useGetCustomerByIdQuery,
@@ -25,49 +25,19 @@ import SelectFileImage from "../../assets/img/selectfileimage.png";
 import { monthItems } from "../../models/months";
 import { dayItems } from "../../models/days";
 import dayjs, { Dayjs } from "dayjs";
-import { DatePickerType } from "antd/es/date-picker";
 import BreadCrum from "../../models/breadcrum/breadcrum";
 import { breadcrumMembers } from "./breadcrumMembers";
 
-// interface DatepickerProperties extends DatePickerType {
-//   defaultValue: Dayjs | undefined;
-//   onChange: (value: Dayjs | undefined) => void;
-// }
-
-// function CustomDatepicker({ defaultValue, onChange }: DatepickerProperties) {
-//   return (
-//     <DatePicker defaultValue={defaultValue} picker="year" onChange={onChange} />
-//   );
-// }
 const EditCustomer = () => {
   const { message } = App.useApp();
   const [form] = Form.useForm();
   const { id } = useParams();
   const { data } = useGetCustomerByIdQuery(id!);
-  const [trigger, { data: dataEditMutation }] = useEditCustomerByIdMutation();
-  const navigate = useNavigate();
-  let selectedDay: string = "";
-  let selectedMonth: string = "";
-  let selectedYear: string | string[] = "";
+  const [trigger] = useEditCustomerByIdMutation();
   const { refetch } = useGetAllCustomersQuery("");
-
-  let selectedStatus: number;
-
-  const handleYearPickerChange = (dateString: string | string[]) => {
-    selectedYear = dateString;
-  };
-  const handleSelectMonthChange = (value: string) => {
-    selectedMonth = value;
-  };
-  const handleSelectDayChange = (value: string) => {
-    selectedDay = value;
-  };
-  const handleStatusChange = (e: RadioChangeEvent) => {
-    selectedStatus = e.target.value;
-  };
+  const navigate = useNavigate();
 
   const onFinish = async (values: ICustomer) => {
-    console.log(values.status);
     await trigger({
       id: id,
       firstName: values.firstName,
@@ -77,11 +47,12 @@ const EditCustomer = () => {
         values.year as Dayjs
       ).format("YYYY")}`,
       phoneNumber: values.phoneNumber,
-      status: selectedStatus,
+      status: values.status,
       email: values.email,
     }).then((result) => {
       if (result.data) message.success("edited successful");
       refetch();
+
       navigate("/");
     });
   };
@@ -90,6 +61,9 @@ const EditCustomer = () => {
       const newData = { ...data, year: dayjs(`${data.year}/01/01`) };
       form.setFieldsValue(newData);
     }
+    return () => {
+      apiController.abort();
+    };
   }, [data]);
   return (
     <Space className="px-8 py-4 w-full " direction="vertical" size="middle">
@@ -141,7 +115,7 @@ const EditCustomer = () => {
             ]}
             className="font-medium text-sm mb-8"
           >
-            <Radio.Group onChange={handleStatusChange}>
+            <Radio.Group>
               <Radio value={1}>Approved</Radio>
               <Radio value={2}>Rejected</Radio>
               <Radio value={3}>Blocked</Radio>
@@ -175,11 +149,7 @@ const EditCustomer = () => {
                 },
               ]}
             >
-              <Select
-                placeholder="Select Month"
-                options={monthItems}
-                onChange={handleSelectMonthChange}
-              />
+              <Select placeholder="Select Month" options={monthItems} />
             </Form.Item>
 
             <Form.Item
@@ -193,11 +163,7 @@ const EditCustomer = () => {
                 },
               ]}
             >
-              <Select
-                placeholder="Select Day"
-                options={dayItems}
-                onChange={handleSelectDayChange}
-              />
+              <Select placeholder="Select Day" options={dayItems} />
             </Form.Item>
 
             <Form.Item
@@ -211,7 +177,7 @@ const EditCustomer = () => {
                 },
               ]}
             >
-              <DatePicker onChange={handleYearPickerChange} picker="year" />
+              <DatePicker picker="year" />
             </Form.Item>
           </Flex>
 

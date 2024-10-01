@@ -1,4 +1,4 @@
-import NewCustomerManually from "../../../modules/NewCustomerManually/components";
+import NewCustomerManually from "../../../modules/NewCustomerManually";
 
 const NewCustomerManuallyPage = () => {
   return <NewCustomerManually />;

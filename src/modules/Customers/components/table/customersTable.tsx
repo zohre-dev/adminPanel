@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Flex, type TableColumnsType } from "antd";
 import Table from "antd/es/table";
 import { omit } from "lodash";
@@ -8,8 +8,6 @@ import ITableItems from "./items";
 import { TableColumns } from "./column";
 import { useGetAllCustomersQuery } from "../../../../services/customerApi/customerApi";
 import { useCustomerContext } from "../../context";
-import * as XLSX from "xlsx";
-import { ICustomerPayload } from "../../../../models/customerType";
 
 const CustomersTable: React.FC = () => {
   let tabelRowNum = 0;
@@ -55,39 +53,6 @@ const CustomersTable: React.FC = () => {
         };
       })
     : [];
-
-  const [resultData, setResultData] = useState<ICustomerPayload[]>([]);
-  useEffect(() => {
-    // Fetch Excel file.
-    fetch("/usersInfo.xlsx")
-      // Convert to ArrayBuffer.
-      .then((res) => res.arrayBuffer())
-      .then((data) => {
-        const wb = XLSX.read(data, { type: "buffer" });
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
-        // Convert to JSON.
-        const json = XLSX.utils.sheet_to_json(ws) as ICustomerPayload[];
-        setResultData(json);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (resultData.length) {
-      resultData.map((record: any) => {
-        tabelRowNum += 1;
-        TableDataSource.push({
-          rowNum: tabelRowNum,
-          fullname: record.firstName + " " + record.lastName,
-          status: record.status,
-          email: record.email,
-          birthDate: record.birthDayDate,
-          id: record.id,
-        });
-      });
-      console.log(TableDataSource);
-    }
-  }, [resultData]);
 
   return (
     <Flex align="center" className="p-4 bg-white rounded-lg">

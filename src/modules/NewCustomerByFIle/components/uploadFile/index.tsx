@@ -1,15 +1,5 @@
 import { UploadOutlined } from "@ant-design/icons";
-import {
-  App,
-  Button,
-  Flex,
-  Image,
-  Progress,
-  Space,
-  Typography,
-  Upload,
-  UploadProps,
-} from "antd";
+import { Button, Flex, Image, Space, Typography, Upload } from "antd";
 import Title from "antd/es/typography/Title";
 import UploadFileImage from "../../../../assets/img/uploadfile.png";
 import { useNavigate } from "react-router-dom";
@@ -18,17 +8,16 @@ import { fileUploadProps } from "./uploadProps";
 import { useCustomerByFileContext } from "../../context";
 import { UPLOAD } from "../uploadParts";
 import { UploadRequestOption } from "rc-upload/lib/interface";
-import { RcFile } from "antd/es/upload";
+// import { RcFile} from "antd/es/upload";
 
 const UploadFile = () => {
   const { dispatch } = useCustomerByFileContext();
-  const { setUploadStep, setSelectedFile, setFileName } = dispatch;
-  const { message } = App.useApp();
+  const { setUploadStep, setSelectedFile } = dispatch;
   const { Text } = Typography;
   const navigate = useNavigate();
 
   const handleFileUpload = async ({ file }: UploadRequestOption) => {
-    setFileName((file as RcFile).name);
+    // setFileName((file as RcFile).name);
     setSelectedFile(file);
     setUploadStep(UPLOAD.uploading);
   };
@@ -62,19 +51,18 @@ const UploadFile = () => {
         <Upload
           {...fileUploadProps}
           customRequest={handleFileUpload}
-          // beforeUpload={(file) => {
-          //   return new Promise((resolve, reject) => {
-          //     if (file.size > 5000000) {
-          //       reject("file size exceeded");
-          //       message.error("file must be less than 5 MB");
-          //       setUploadStep(UPLOAD.uploadWrong);
-          //     } else {
-          //       resolve("success");
-
-          //       // setUploadStep(UPLOAD.uploading);
-          //     }
-          //   });
-          // }}
+          beforeUpload={(file) => {
+            // return new Promise((resolve, reject) => {
+            //   if (file.size > 5000000) {
+            //     reject("file size exceeded");
+            //     message.error("file must be less than 5 MB");
+            //     setUploadStep(UPLOAD.uploadWrong);
+            //   } else {
+            //     resolve("success");
+            //     // setUploadStep(UPLOAD.uploading);
+            //   }
+            // });
+          }}
         >
           <Button type="primary" size="large" icon={<UploadOutlined />}>
             UPLOAD FILE

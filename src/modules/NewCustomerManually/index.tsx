@@ -12,49 +12,40 @@ import {
   Space,
 } from "antd";
 import Title from "antd/es/typography/Title";
-import SelectFileImage from "../../../assets/img/selectfileimage.png";
+import SelectFileImage from "../../assets/img/selectfileimage.png";
 
-import { useCreateCustomerMutation } from "../../../services/customerApi/customerApi";
-import { ICustomer } from "../../../models/customerType";
+import {
+  useCreateCustomerMutation,
+  useGetAllCustomersQuery,
+} from "../../services/customerApi/customerApi";
+import { ICustomer } from "../../models/customerType";
 import { useNavigate } from "react-router-dom";
-import { dayItems } from "../../../models/days";
-import { monthItems } from "../../../models/months";
-import BreadCrum from "../../../models/breadcrum/breadcrum";
-import { breadcrumMembers } from "../breadcrumMembers";
+import { dayItems } from "../../models/days";
+import { monthItems } from "../../models/months";
+import BreadCrum from "../../models/breadcrum/breadcrum";
+import { breadcrumMembers } from "./breadcrumMembers";
+import { Dayjs } from "dayjs";
 
 const NewCustomerManually = () => {
   const [trigger] = useCreateCustomerMutation();
+  const { refetch } = useGetAllCustomersQuery("");
   const { message } = App.useApp();
   const navigate = useNavigate();
-  let selectedDay: string = "";
-  let selectedMonth: string = "";
-  let selectedYear: string | string[] = "";
-  let selectedStatus: number = 1;
-
-  const handleYearPickerChange = (dateString: string | string[]) => {
-    selectedYear = dateString;
-  };
-  const handleSelectMonthChange = (value: string) => {
-    selectedMonth = value;
-  };
-  const handleSelectDayChange = (value: string) => {
-    selectedDay = value;
-  };
-  const handleStatusChange = (e: RadioChangeEvent) => {
-    selectedStatus = e.target.value;
-  };
 
   const onFinish = async (values: ICustomer) => {
     await trigger({
       firstName: values.firstName,
       lastName: values.lastName,
       idNumber: values.idNumber,
-      birthDayDate: `${selectedDay}/${selectedMonth}/${selectedYear}`,
+      birthDayDate: `${values.day}/${values.month}/${(
+        values.year as Dayjs
+      ).format("YYYY")}`,
       phoneNumber: values.phoneNumber,
-      status: selectedStatus,
+      status: values.status,
       email: values.email,
     }).then((result) => {
       if (result.data) {
+        refetch();
         message.success("customer created successfuly");
         navigate("/");
       }
@@ -108,7 +99,7 @@ const NewCustomerManually = () => {
             ]}
             className="font-medium text-sm mb-8"
           >
-            <Radio.Group onChange={handleStatusChange} defaultValue={1}>
+            <Radio.Group defaultValue={1}>
               <Radio value={1}>Approved</Radio>
               <Radio value={2}>Rejected</Radio>
               <Radio value={3}>Blocked</Radio>
@@ -141,11 +132,7 @@ const NewCustomerManually = () => {
                 },
               ]}
             >
-              <Select
-                placeholder="Select Month"
-                options={monthItems}
-                onChange={handleSelectMonthChange}
-              />
+              <Select placeholder="Select Month" options={monthItems} />
             </Form.Item>
 
             <Form.Item
@@ -159,11 +146,7 @@ const NewCustomerManually = () => {
                 },
               ]}
             >
-              <Select
-                placeholder="Select Day"
-                options={dayItems}
-                onChange={handleSelectDayChange}
-              />
+              <Select placeholder="Select Day" options={dayItems} />
             </Form.Item>
 
             <Form.Item
@@ -177,7 +160,7 @@ const NewCustomerManually = () => {
                 },
               ]}
             >
-              <DatePicker onChange={handleYearPickerChange} picker="year" />
+              <DatePicker picker="year" />
             </Form.Item>
           </Flex>
 
