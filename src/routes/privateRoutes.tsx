@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 import { ROUTES } from "./routesUrls";
 
 import CustomersPage from "../pages/private/CustomersPage";
@@ -46,5 +46,9 @@ export const privateRoutes: RouteObject[] = [
         element: <Client />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to={ROUTES.home} />,
   },
 ];

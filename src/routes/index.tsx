@@ -16,55 +16,67 @@ import { useLazyGetMeQuery } from "../services/authAPi/authApi";
 export const Routes: FC = () => {
   const [currentRoute, setCurrentRoute] = useState<RouteObject[]>();
   const userToken = useAppSelector(selectUserToken);
-  // const rememberMe = useAppSelector(selectRememberMe);
-  let rememberMe: boolean = false;
-  const [trigger, { data }] = useLazyGetMeQuery();
+  const localToken = localStorage.getItem(USER_INFO);
+  const sessionToken = sessionStorage.getItem(USER_INFO);
 
-  useEffect(() => {
-    setCurrentRoute(userToken ? privateRoutes : publicRoutes);
-  }, [userToken]);
-
-  async function me(token: string) {
-    await trigger(token).then((response) => {
-      if (response.data) {
+  const [trigger, { isLoading }] = useLazyGetMeQuery();
+  const getUserInfo = async ({
+    userInfo,
+    rememberMe,
+  }: {
+    userInfo:
+      | {
+          userName: string;
+          userToken: string;
+        }
+      | undefined;
+    rememberMe: boolean;
+  }) => {
+    try {
+      if (userInfo && userInfo?.userToken) {
+        await trigger(userInfo.userToken).then((response) => {
+          if (response && response.isSuccess) {
+            patcher(
+              setUser({
+                name: userInfo.userName,
+                token: userInfo.userToken,
+                rememberChecked: rememberMe,
+              })
+            );
+            setCurrentRoute(privateRoutes);
+          } else {
+            setCurrentRoute(publicRoutes);
+          }
+        });
       } else {
+        setCurrentRoute(publicRoutes);
       }
-    });
-  }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const checkUser = async () => {
+    if (localToken || sessionToken) {
+      const userInfo = localToken
+        ? JSON.parse(localToken)
+        : sessionToken
+        ? JSON.parse(sessionToken)
+        : undefined;
+      getUserInfo({ userInfo, rememberMe: !!localToken });
+    } else {
+      setCurrentRoute(publicRoutes);
+    }
+  };
 
   useEffect(() => {
-    if (localStorage.getItem(USER_INFO)) {
-      rememberMe = true;
-    } else if (sessionStorage.getItem(USER_INFO)) {
-      rememberMe = false;
-    }
-
-    const { userToken, userName } = JSON.parse(
-      localStorage.getItem(USER_INFO) ||
-        sessionStorage.getItem(USER_INFO) ||
-        "{}"
-    );
-
-    if (userToken && userName) {
-      // const result = me(userToken);
-      // console.log("result", result);
-      trigger(userToken).then((response) => {
-        console.log(response);
-        patcher(
-          setUser({
-            name: userName,
-            token: userToken,
-            rememberChecked: rememberMe,
-          })
-        );
-      });
-    }
-  }, []);
+    checkUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userToken]);
   const routes = useMemo(() => {
     return currentRoute && createBrowserRouter(currentRoute);
   }, [currentRoute]);
 
-  if (!routes) {
+  if (!routes || isLoading) {
     return (
       <Flex
         justify="center"

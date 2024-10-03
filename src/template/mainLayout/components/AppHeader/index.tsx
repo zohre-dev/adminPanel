@@ -8,14 +8,16 @@ import { selectUsername } from "../../../../feachers/auth/authSlice";
 import { useMediaQuery } from "../../../../hooks/mediaQuery";
 import { BreakPoints } from "../../../../constants/breakPointsNumber";
 import { useMainLayoutContext } from "../../context";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { USER_INFO } from "../../../../constants/localStorageKeys";
+import { ROUTES } from "../../../../routes/routesUrls";
 
 const AppHeader: React.FC = () => {
   const { Text } = Typography;
   const userName = useAppSelector(selectUsername);
   const isLabtop = useMediaQuery(BreakPoints.labtop); //greater than 991 is laptob size
   const { dispatch } = useMainLayoutContext();
+  const navigate = useNavigate();
   const { setOpenDrawer, setOpenNotificationDrawer, setOpenCommentsDrawer } =
     dispatch;
 
@@ -28,11 +30,18 @@ const AppHeader: React.FC = () => {
     {
       key: "2",
       danger: true,
-      label: "Logout",
+      label: (
+        <div
+          onClick={() => {
+            localStorage.removeItem(USER_INFO);
+            navigate(ROUTES.login);
+          }}
+        >
+          {"Logout"}
+        </div>
+      ),
     },
   ];
-  const [comments, setComments] = useState<any>([]);
-
   return (
     <Flex
       align="center"
