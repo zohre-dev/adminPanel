@@ -48,13 +48,16 @@ export const Routes: FC = () => {
     if (userToken && userName) {
       // const result = me(userToken);
       // console.log("result", result);
-      patcher(
-        setUser({
-          name: userName,
-          token: userToken,
-          rememberChecked: rememberMe,
-        })
-      );
+      trigger(userToken).then((response) => {
+        console.log(response);
+        patcher(
+          setUser({
+            name: userName,
+            token: userToken,
+            rememberChecked: rememberMe,
+          })
+        );
+      });
     }
   }, []);
   const routes = useMemo(() => {
