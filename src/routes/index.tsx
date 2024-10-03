@@ -20,6 +20,10 @@ export const Routes: FC = () => {
   let rememberMe: boolean = false;
   const [trigger, { data }] = useLazyGetMeQuery();
 
+  useEffect(() => {
+    setCurrentRoute(userToken ? privateRoutes : publicRoutes);
+  }, [userToken]);
+
   async function me(token: string) {
     await trigger(token).then((response) => {
       if (response.data) {
@@ -27,9 +31,6 @@ export const Routes: FC = () => {
       }
     });
   }
-  useEffect(() => {
-    setCurrentRoute(userToken ? privateRoutes : publicRoutes);
-  }, [userToken]);
 
   useEffect(() => {
     if (localStorage.getItem(USER_INFO)) {

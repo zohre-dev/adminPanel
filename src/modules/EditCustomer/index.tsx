@@ -14,7 +14,6 @@ import {
 import Title from "antd/es/typography/Title";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  apiController,
   useEditCustomerByIdMutation,
   useGetAllCustomersQuery,
   useGetCustomerByIdQuery,
@@ -61,9 +60,6 @@ const EditCustomer = () => {
       const newData = { ...data, year: dayjs(`${data.year}/01/01`) };
       form.setFieldsValue(newData);
     }
-    return () => {
-      apiController.abort();
-    };
   }, [data]);
   return (
     <Space className="px-8 py-4 w-full " direction="vertical" size="middle">

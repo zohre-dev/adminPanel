@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ICustomer, ICustomerPayload } from "../../models/customerType";
-export const apiController = new AbortController();
 
 export const customerApi = createApi({
   reducerPath: "customerApi",
@@ -15,23 +14,22 @@ export const customerApi = createApi({
     getCustomerById: builder.query<ICustomer, string>({
       query: (id) => ({
         url: `customers/${id}`,
-        signal: apiController.signal,
-        transformResponse(res: ICustomerPayload) {
-          const birthDateArr = res.birthDayDate.split("/");
-          return {
-            id: res.id,
-            firstName: res.firstName,
-            lastName: res.lastName,
-            idNumber: res.idNumber,
-            day: birthDateArr[0],
-            month: birthDateArr[1],
-            year: birthDateArr[2],
-            phoneNumber: res.phoneNumber,
-            status: res.status,
-            email: res.email,
-          };
-        },
       }),
+      transformResponse(res: ICustomerPayload) {
+        const birthDateArr = res.birthDayDate.split("/");
+        return {
+          id: res.id,
+          firstName: res.firstName,
+          lastName: res.lastName,
+          idNumber: res.idNumber,
+          day: birthDateArr[0],
+          month: birthDateArr[1],
+          year: birthDateArr[2],
+          phoneNumber: res.phoneNumber,
+          status: res.status,
+          email: res.email,
+        };
+      },
     }),
     // 05/08/2024
     editCustomerById: builder.mutation<void, ICustomerPayload>({
@@ -58,7 +56,6 @@ export const customerApi = createApi({
     findCustomer: builder.query<ICustomer[], ICustomerPayload>({
       // &birthDayDate=${query.birthDayDate}
       query: (query) => {
-        console.log("query", query);
         return `customers?firstName=${query.firstName}&lastName=${query.lastName}&idNumber=${query.idNumber}&phoneNumber=${query.phoneNumber}&status=${query.status}&email=${query.email}`;
       },
     }),

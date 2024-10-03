@@ -20,6 +20,7 @@ const Uploading = () => {
   const navigate = useNavigate();
   const { values } = useCustomerByFileContext();
   const { selectedFile } = values;
+
   const [progress, setProgress] = useState<number | undefined>();
   const { refetch } = useGetAllCustomersQuery("");
   const [trigger] = useCreateCustomerMutation();
@@ -42,7 +43,6 @@ const Uploading = () => {
       json.map(
         async (record) =>
           await findCustomer(record).then(async (result) => {
-            // console.log("result", result);
             if (result.data?.length! === 0) await trigger(record);
           })
       );
@@ -51,6 +51,7 @@ const Uploading = () => {
     // refetch();
     const formData = new FormData();
     formData.append("file", selectedFile);
+
     await axios
       .post(uploadUrls.upload, formData, {
         headers: {

@@ -10,4 +10,5 @@ export enum ROUTES {
   editCustomer = "/customers/editCustomer/:id",
   showCustomer = "/customers/showCustomer/:id",
   login = "/login",
+  cilent = "/client",
 }

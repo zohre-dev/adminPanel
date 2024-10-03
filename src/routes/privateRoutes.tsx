@@ -8,6 +8,7 @@ import EditCustomerPage from "../pages/private/EditCustomerPage";
 import NewCustomerByFilePage from "../pages/private/NewCustomerByFilePage";
 
 import ShowCustomerPage from "../pages/private/ShowCustomerPage";
+import Client from "../Chat/client";
 
 export const privateRoutes: RouteObject[] = [
   {
@@ -39,6 +40,10 @@ export const privateRoutes: RouteObject[] = [
       {
         path: ROUTES.showCustomer,
         element: <ShowCustomerPage />,
+      },
+      {
+        path: ROUTES.cilent,
+        element: <Client />,
       },
     ],
   },

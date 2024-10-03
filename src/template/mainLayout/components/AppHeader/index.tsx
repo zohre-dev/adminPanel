@@ -9,6 +9,7 @@ import { useMediaQuery } from "../../../../hooks/mediaQuery";
 import { BreakPoints } from "../../../../constants/breakPointsNumber";
 import { useMainLayoutContext } from "../../context";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const AppHeader: React.FC = () => {
   const { Text } = Typography;
@@ -30,6 +31,7 @@ const AppHeader: React.FC = () => {
       label: "Logout",
     },
   ];
+  const [comments, setComments] = useState<any>([]);
 
   return (
     <Flex
@@ -54,11 +56,14 @@ const AppHeader: React.FC = () => {
             </Badge>
           }
         />
-        <Button
-          className="headerButton"
-          icon={<MailOutlined />}
-          onClick={() => setOpenCommentsDrawer(true)}
-        />
+        <Badge count={5}>
+          <Button
+            className="headerButton"
+            icon={<MailOutlined />}
+            onClick={() => setOpenCommentsDrawer(true)}
+          />
+        </Badge>
+
         <Flex
           className="border rounded-md bg-white h-10 px-2"
           gap="small"

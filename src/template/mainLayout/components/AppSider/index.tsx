@@ -48,18 +48,12 @@ const AppSider: FC = () => {
         onClick={handleClick}
       />
       <SiderMenu />
-
-      <Link to="/customers/editCustomer">edit customer</Link>
       <br />
-      <Link to="/customers/newCustomerByFile">new customer by file</Link>
-
       <br />
-      <Link to="/customers/uploadWrong">uploadWrong</Link>
-
+      <Link to="/client" className="text-white">
+        Go To Client Page
+      </Link>
       <br />
-      <Link to="/customers/uploading">uploading</Link>
-      <br />
-      <Link to="/customers/showCustomer">showCustomer</Link>
     </Sider>
   );
 };
