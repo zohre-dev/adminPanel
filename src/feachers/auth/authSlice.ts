@@ -4,6 +4,14 @@ import { RootState } from "../../store/store";
 import { USER_INFO } from "../../constants/localStorageKeys";
 import { IInitialState } from "./authSliceType";
 
+// action = {
+//             payload = {
+//             name: result.data?.user.name,
+//             token: result.data?.token,
+//             rememberChecked: rememberChecked,
+//           }
+// }
+
 const authSlice = createSlice({
   name: "authSlice",
   initialState,
@@ -14,6 +22,7 @@ const authSlice = createSlice({
       // state.rememberChecked = action.payload.rememberChecked;
 
       if (action.payload.rememberChecked) {
+        console.log("hi localstorage");
         localStorage.setItem(
           USER_INFO,
           JSON.stringify({
@@ -22,6 +31,7 @@ const authSlice = createSlice({
           })
         );
       } else {
+        console.log("hi session");
         sessionStorage.setItem(
           USER_INFO,
           JSON.stringify({

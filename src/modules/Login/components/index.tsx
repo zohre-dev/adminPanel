@@ -24,6 +24,7 @@ const Login = () => {
   const onFinish = async (values: ILoginFields) => {
     await trigger({ email: values.email, password: values.password }).then(
       (result) => {
+        console.log("resultttttttttt", result);
         if (result.data) {
           message.success("login successful");
           patcher(

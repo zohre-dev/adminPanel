@@ -19,30 +19,25 @@ export const Routes: FC = () => {
   const localToken = localStorage.getItem(USER_INFO);
   const sessionToken = sessionStorage.getItem(USER_INFO);
 
-  const [trigger, { isLoading }] = useLazyGetMeQuery();
-  const getUserInfo = async ({
-    userInfo,
-    rememberMe,
-  }: {
-    userInfo:
-      | {
-          userName: string;
-          userToken: string;
-        }
-      | undefined;
+  // const getUserInfo = async ({userInfo,rememberMe}: {userInfo: { userName: string; userToken: string } | undefined  ; rememberMe: boolean;})
+  interface IgetUserInfo {
+    userInfo: { userName: string; userToken: string } | undefined;
     rememberMe: boolean;
-  }) => {
+  }
+  const [trigger, { isLoading }] = useLazyGetMeQuery();
+  const getUserInfo = async ({ userInfo, rememberMe }: IgetUserInfo) => {
     try {
       if (userInfo && userInfo?.userToken) {
         await trigger(userInfo.userToken).then((response) => {
+          console.log("sanaz", response);
           if (response && response.isSuccess) {
-            patcher(
-              setUser({
-                name: userInfo.userName,
-                token: userInfo.userToken,
-                rememberChecked: rememberMe,
-              })
-            );
+            // patcher(
+            //   setUser({
+            //     name: userInfo.userName,
+            //     token: userInfo.userToken,
+            //     rememberChecked: rememberMe,
+            //   })
+            // );
             setCurrentRoute(privateRoutes);
           } else {
             setCurrentRoute(publicRoutes);
@@ -72,6 +67,11 @@ export const Routes: FC = () => {
     checkUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userToken]);
+
+  // let routes = undefined;
+  // useEffect(() => {
+  //   routes = currentRoute && createBrowserRouter(currentRoute);
+  // }, [currentRoute]);
   const routes = useMemo(() => {
     return currentRoute && createBrowserRouter(currentRoute);
   }, [currentRoute]);
