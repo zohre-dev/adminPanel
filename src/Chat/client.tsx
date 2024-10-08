@@ -1,10 +1,12 @@
 import { Button, Form, Input } from "antd";
 import { useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
 // import { io } from "socket.io-client";
 
 const Client = () => {
   const [form] = Form.useForm();
-  // const [socket, setSocket] = useState<any>(null);
+  const [socket, setSocket] =
+    useState<Socket<ServerToClientEvents, ClientToServerEvents>>(undefined);
   // const [text, setText] = useState<string>("");
 
   // useEffect(() => {

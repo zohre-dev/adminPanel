@@ -16,7 +16,7 @@ export const customerApi = createApi({
         url: `customers/${id}`,
       }),
       transformResponse(res: ICustomerPayload) {
-        const birthDateArr = res.birthDayDate.split("/");
+        const birthDateArr = (res.birthDayDate as string).split("/");
         return {
           id: res.id,
           firstName: res.firstName,
@@ -56,7 +56,7 @@ export const customerApi = createApi({
     findCustomer: builder.query<ICustomer[], ICustomerPayload>({
       // &birthDayDate=${query.birthDayDate}
       query: (query) => {
-        return `customers?firstName=${query.firstName}&lastName=${query.lastName}&idNumber=${query.idNumber}&phoneNumber=${query.phoneNumber}&status=${query.status}&email=${query.email}`;
+        return `customers?email=${query.email}`;
       },
     }),
   }),
@@ -70,4 +70,5 @@ export const {
   useGetCustomerByIdQuery,
   useCreateCustomerMutation,
   useLazyFindCustomerQuery,
+  useLazyGetCustomerByIdQuery,
 } = customerApi;

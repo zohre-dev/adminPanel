@@ -29,7 +29,6 @@ export const Routes: FC = () => {
     try {
       if (userInfo && userInfo?.userToken) {
         await trigger(userInfo.userToken).then((response) => {
-          console.log("sanaz", response);
           if (response && response.isSuccess) {
             // patcher(
             //   setUser({

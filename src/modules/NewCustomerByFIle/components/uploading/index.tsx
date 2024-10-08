@@ -15,6 +15,7 @@ import {
   useGetAllCustomersQuery,
   useLazyFindCustomerQuery,
 } from "../../../../services/customerApi/customerApi";
+import dayjs from "dayjs";
 
 const Uploading = () => {
   const navigate = useNavigate();
@@ -35,12 +36,35 @@ const Uploading = () => {
     let reader = new FileReader();
     reader.onload = async (e: any) => {
       const data = e.target.result;
-      const workbook = XLSX.read(data, { type: "array" });
+      const workbook = XLSX.read(data, {
+        type: "binary",
+        cellDates: true,
+        cellText: false,
+      });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-      const json = XLSX.utils.sheet_to_json(worksheet) as ICustomerPayload[];
+      const json = XLSX.utils.sheet_to_json(worksheet, {
+        dateNF: "dd-mm-yyyy",
+      }) as ICustomerPayload[];
 
-      json.map(
+      function formatDate(date: Date) {
+        var d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+
+        return [day, month, year].join("/");
+      }
+
+      const newdata = json.map((item) => ({
+        ...item,
+        birthDayDate: dayjs(item.birthDayDate).format("DD/MM/YYYY"),
+      }));
+      console.log("newdata", newdata);
+      newdata.map(
         async (record) =>
           await findCustomer(record).then(async (result) => {
             if (result.data?.length! === 0) await trigger(record);

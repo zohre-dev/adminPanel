@@ -16,7 +16,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   useEditCustomerByIdMutation,
   useGetAllCustomersQuery,
-  useGetCustomerByIdQuery,
+  useLazyGetCustomerByIdQuery,
 } from "../../services/customerApi/customerApi";
 import { useEffect } from "react";
 import { ICustomer } from "../../models/customerType";
@@ -31,7 +31,7 @@ const EditCustomer = () => {
   const { message } = App.useApp();
   const [form] = Form.useForm();
   const { id } = useParams();
-  const { data } = useGetCustomerByIdQuery(id!);
+  const [triggerGetCustomerById, { data }] = useLazyGetCustomerByIdQuery();
   const [trigger] = useEditCustomerByIdMutation();
   const { refetch } = useGetAllCustomersQuery("");
   const navigate = useNavigate();
@@ -50,6 +50,7 @@ const EditCustomer = () => {
       email: values.email,
     }).then((result) => {
       if (result.data) message.success("edited successful");
+      form.resetFields();
       refetch();
 
       navigate("/");
@@ -61,6 +62,13 @@ const EditCustomer = () => {
       form.setFieldsValue(newData);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (id) {
+      triggerGetCustomerById(id, false);
+    }
+  }, [id]);
+
   return (
     <Space className="px-8 py-4 w-full " direction="vertical" size="middle">
       <Title level={1}>Edit Customer</Title>

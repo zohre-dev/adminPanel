@@ -5,7 +5,7 @@ export interface ICustomerPayload {
   firstName: string;
   lastName: string;
   idNumber: string;
-  birthDayDate: string;
+  birthDayDate: string | Date;
   phoneNumber: string;
   status: number;
   email: string;

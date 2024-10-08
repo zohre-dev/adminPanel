@@ -89,6 +89,7 @@ const NewCustomerManually = () => {
             <Input size="large" className="" />
           </Form.Item>
           <Form.Item
+            initialValue={1}
             name="status"
             label="Status"
             layout="vertical"
@@ -99,7 +100,7 @@ const NewCustomerManually = () => {
             ]}
             className="font-medium text-sm mb-8"
           >
-            <Radio.Group defaultValue={1}>
+            <Radio.Group>
               <Radio value={1}>Approved</Radio>
               <Radio value={2}>Rejected</Radio>
               <Radio value={3}>Blocked</Radio>
