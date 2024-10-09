@@ -7,13 +7,18 @@ import { useLoginUserMutation } from "../../../services/authAPi/authApi";
 import { useNavigate } from "react-router-dom";
 import { patcher } from "../../../store/store";
 import { ROUTES } from "../../../routes/routesUrls";
+import { io } from "socket.io-client";
 
 import { setUser } from "../../../feachers/auth/authSlice";
 import { useState } from "react";
+import { useGlobalContext } from "../../../globalContext/context";
 
 const { Title } = Typography;
 
 const Login = () => {
+  // const { values, dispatch } = useCustomerContext();
+  // const { searchTerm } = values;
+
   const [rememberChecked, setRememberChecked] = useState<boolean>(false);
   const [trigger, { data }] = useLoginUserMutation();
   const { message } = App.useApp();
@@ -24,7 +29,6 @@ const Login = () => {
   const onFinish = async (values: ILoginFields) => {
     await trigger({ email: values.email, password: values.password }).then(
       (result) => {
-        console.log("resultttttttttt", result);
         if (result.data) {
           message.success("login successful");
           patcher(
@@ -34,6 +38,7 @@ const Login = () => {
               rememberChecked: rememberChecked,
             })
           );
+
           navigate(ROUTES.home);
         }
       }

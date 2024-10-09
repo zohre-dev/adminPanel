@@ -13,10 +13,26 @@ interface ServerToClientEvents {
   noArg: () => void;
   basicEmit: (a: number, b: string) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
+  receiveMessage: ({
+    senderEmail,
+    message,
+  }: {
+    senderEmail: string;
+    message: string;
+  }) => void;
 }
 
 interface ClientToServerEvents {
-  hello: () => void;
+  newUser: (username: string) => void;
+  sendMessage: ({
+    senderEmail,
+    receiverEmail,
+    message,
+  }: {
+    senderEmail: string;
+    receiverEmail: string;
+    message: string;
+  }) => void;
 }
 
 interface IContext {

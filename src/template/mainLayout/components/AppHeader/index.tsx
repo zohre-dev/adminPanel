@@ -11,15 +11,28 @@ import { useMainLayoutContext } from "../../context";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_INFO } from "../../../../constants/localStorageKeys";
 import { ROUTES } from "../../../../routes/routesUrls";
+import { useEffect, useState } from "react";
+import { useGlobalContext } from "../../../../globalContext/context";
+import { io } from "socket.io-client";
 
 const AppHeader: React.FC = () => {
   const { Text } = Typography;
   const userName = useAppSelector(selectUsername);
   const isLabtop = useMediaQuery(BreakPoints.labtop); //greater than 991 is laptob size
-  const { dispatch } = useMainLayoutContext();
+  const { dispatch, values: valuesMainLayoutContext } = useMainLayoutContext();
+  const { comments } = valuesMainLayoutContext;
+  const {
+    setOpenDrawer,
+    setOpenNotificationDrawer,
+    setOpenCommentsDrawer,
+    setComments,
+  } = dispatch;
+
+  const { dispatch: dispatchGlobalContext } = useGlobalContext();
+  const { setSocket } = dispatchGlobalContext;
+  const { values } = useGlobalContext();
+  const { socket } = values;
   const navigate = useNavigate();
-  const { setOpenDrawer, setOpenNotificationDrawer, setOpenCommentsDrawer } =
-    dispatch;
 
   const items = [
     {
@@ -42,6 +55,22 @@ const AppHeader: React.FC = () => {
       ),
     },
   ];
+  useEffect(() => {
+    const socket = io("http://localhost:5000");
+    setSocket(socket);
+  }, []);
+  useEffect(() => {
+    if (socket) socket.emit("newUser", "zohre@gmail.com");
+    socket?.on("receiveMessage", ({ senderEmail, message }) => {
+      setComments((prev = []) => [
+        ...prev,
+        { email: senderEmail, message: message },
+      ]);
+    });
+  }, [socket]);
+  const zozo = () => {
+    console.log("comments are: ", comments);
+  };
   return (
     <Flex
       align="center"
@@ -65,7 +94,7 @@ const AppHeader: React.FC = () => {
             </Badge>
           }
         />
-        <Badge count={5}>
+        <Badge count={comments ? comments.length : 0}>
           <Button
             className="headerButton"
             icon={<MailOutlined />}
@@ -95,6 +124,11 @@ const AppHeader: React.FC = () => {
           </Dropdown>
         </Flex>
       </Flex>
+      <div>
+        <Button onClick={zozo} type="primary">
+          Show All
+        </Button>
+      </div>
     </Flex>
   );
 };

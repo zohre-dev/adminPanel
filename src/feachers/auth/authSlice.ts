@@ -19,7 +19,6 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<IInitialState>) => {
       state.token = action.payload.token;
       state.name = action.payload.name;
-      // state.rememberChecked = action.payload.rememberChecked;
 
       if (action.payload.rememberChecked) {
         console.log("hi localstorage");
@@ -47,6 +46,4 @@ const authSlice = createSlice({
 export const { setUser } = authSlice.actions;
 export const selectUsername = (state: RootState) => state.auth.name;
 export const selectUserToken = (state: RootState) => state.auth.token;
-// export const selectRememberMe = (state: RootState) =>
-//   state.auth.rememberChecked;
 export default authSlice.reducer;

@@ -7,6 +7,7 @@ import {
   useContext,
   useState,
 } from "react";
+import { IComments } from "./components/CommentsDrawer/commentsType";
 
 interface IContext {
   values: {
@@ -14,12 +15,14 @@ interface IContext {
     openDrawer: boolean;
     openNotificationDrawer: boolean;
     openCommentsDrawer: boolean;
+    comments: IComments[] | undefined;
   };
   dispatch: {
     setCollapsed: Dispatch<SetStateAction<boolean>>;
     setOpenDrawer: Dispatch<SetStateAction<boolean>>;
     setOpenNotificationDrawer: Dispatch<SetStateAction<boolean>>;
     setOpenCommentsDrawer: Dispatch<SetStateAction<boolean>>;
+    setComments: Dispatch<SetStateAction<IComments[] | undefined>>;
   };
 }
 
@@ -30,6 +33,7 @@ export const MainLayoutContext = createContext<IContext>({
     openDrawer: false,
     openNotificationDrawer: false,
     openCommentsDrawer: false,
+    comments: undefined,
   },
 
   dispatch: {
@@ -37,6 +41,7 @@ export const MainLayoutContext = createContext<IContext>({
     setOpenDrawer: () => {},
     setOpenNotificationDrawer: () => {},
     setOpenCommentsDrawer: () => {},
+    setComments: () => {},
   },
 });
 /**************************************************************************************** */
@@ -48,18 +53,22 @@ export const MainLayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   const [openCommentsDrawer, setOpenCommentsDrawer] = useState<boolean>(false);
   useState<boolean>(false);
 
+  const [comments, setComments] = useState<IComments[]>();
+
   const sharedValues: IContext = {
     values: {
       collapsed: collapsed,
       openDrawer: openDrawer,
       openNotificationDrawer: openNotificationDrawer,
       openCommentsDrawer: openCommentsDrawer,
+      comments: comments,
     },
     dispatch: {
       setCollapsed: setCollapsed,
       setOpenDrawer: setOpenDrawer,
       setOpenNotificationDrawer: setOpenNotificationDrawer,
       setOpenCommentsDrawer: setOpenCommentsDrawer,
+      setComments: setComments,
     },
   };
 
