@@ -10,6 +10,7 @@ import { useGetAllCustomersQuery } from "../../../../services/customerApi/custom
 import { useCustomerContext } from "../../context";
 
 const CustomersTable: React.FC = () => {
+  console.log("im rendered");
   let tabelRowNum = 0;
   const { values } = useCustomerContext();
   const { searchTerm } = values;

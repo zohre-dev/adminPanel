@@ -10,6 +10,7 @@ export const customerApi = createApi({
         if (searchQuery.length > 2) return `customers?firstName=${searchQuery}`;
         return "customers";
       },
+      keepUnusedDataFor: 0,
     }),
     getCustomerById: builder.query<ICustomer, string>({
       query: (id) => ({

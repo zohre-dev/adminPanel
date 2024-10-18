@@ -28,10 +28,13 @@ const AppHeader: React.FC = () => {
     setComments,
   } = dispatch;
 
-  const { dispatch: dispatchGlobalContext } = useGlobalContext();
-  const { setSocket } = dispatchGlobalContext;
-  const { values } = useGlobalContext();
-  const { socket } = values;
+  const {
+    dispatch: { setSocket },
+    values: { socket },
+  } = useGlobalContext();
+  console.log("socket", socket);
+  // const { values } = useGlobalContext();
+  // const { socket } = values;
   const navigate = useNavigate();
 
   const items = [
@@ -55,10 +58,7 @@ const AppHeader: React.FC = () => {
       ),
     },
   ];
-  useEffect(() => {
-    const socket = io("http://localhost:5000");
-    setSocket(socket);
-  }, []);
+
   useEffect(() => {
     if (socket) socket.emit("newUser", "zohre@gmail.com");
     socket?.on("receiveMessage", ({ senderEmail, message }) => {

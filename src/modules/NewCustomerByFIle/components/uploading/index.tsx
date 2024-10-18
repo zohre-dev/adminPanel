@@ -47,17 +47,17 @@ const Uploading = () => {
         dateNF: "dd-mm-yyyy",
       }) as ICustomerPayload[];
 
-      function formatDate(date: Date) {
-        var d = new Date(date),
-          month = "" + (d.getMonth() + 1),
-          day = "" + d.getDate(),
-          year = d.getFullYear();
+      // function formatDate(date: Date) {
+      //   var d = new Date(date),
+      //     month = "" + (d.getMonth() + 1),
+      //     day = "" + d.getDate(),
+      //     year = d.getFullYear();
 
-        if (month.length < 2) month = "0" + month;
-        if (day.length < 2) day = "0" + day;
+      //   if (month.length < 2) month = "0" + month;
+      //   if (day.length < 2) day = "0" + day;
 
-        return [day, month, year].join("/");
-      }
+      //   return [day, month, year].join("/");
+      // }
 
       const newdata = json.map((item) => ({
         ...item,
@@ -67,39 +67,43 @@ const Uploading = () => {
       newdata.map(
         async (record) =>
           await findCustomer(record).then(async (result) => {
-            if (result.data?.length! === 0) await trigger(record);
+            if (result.data?.length! === 0)
+              await trigger(record).then((resonse) => {
+                refetch();
+                navigate("/");
+              });
           })
       );
     };
     reader.readAsArrayBuffer(selectedFile);
-    // refetch();
+
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    await axios
-      .post(uploadUrls.upload, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Api-Key": "742b50b4-c744-40fd-a0fc-e72c7c85fbbb",
-        },
-        signal: controller.signal,
-        onUploadProgress: (progressEvent) => {
-          const uploaded = progressEvent.loaded;
-          const currentPercent = Math.floor(
-            (uploaded / (progressEvent.total || 0)) * 100
-          );
-          if (currentPercent < 100) {
-            setProgress(currentPercent);
-          }
-        },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          // setProgress(0);
-          refetch();
-          navigate(ROUTES.home);
-        }
-      });
+    // await axios
+    //   .post(uploadUrls.upload, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //       "Api-Key": "742b50b4-c744-40fd-a0fc-e72c7c85fbbb",
+    //     },
+    //     signal: controller.signal,
+    //     onUploadProgress: (progressEvent) => {
+    //       const uploaded = progressEvent.loaded;
+    //       const currentPercent = Math.floor(
+    //         (uploaded / (progressEvent.total || 0)) * 100
+    //       );
+    //       if (currentPercent < 100) {
+    //         setProgress(currentPercent);
+    //       }
+    //     },
+    //   })
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       // setProgress(0);
+    //       refetch();
+    //       navigate(ROUTES.home);
+    //     }
+    //   });
   }, [selectedFile]);
 
   useEffect(() => {

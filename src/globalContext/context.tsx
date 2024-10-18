@@ -5,6 +5,7 @@ import {
   PropsWithChildren,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { io, Socket } from "socket.io-client";
@@ -67,6 +68,10 @@ export const GlobalContextProvider: FC<PropsWithChildren> = ({ children }) => {
       setSocket: setSocket,
     },
   };
+  useEffect(() => {
+    const socket = io("http://localhost:5000");
+    setSocket(socket);
+  }, []);
   return (
     <GlobalContext.Provider value={sharedValues}>
       {children}
